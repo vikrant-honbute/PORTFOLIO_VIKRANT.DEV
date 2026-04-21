@@ -1,27 +1,24 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Manrope, Orbitron } from "next/font/google";
+import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import CursorGlow from "@/components/CursorGlow";
 import "./globals.css";
 
-const display = Orbitron({
-  variable: "--font-orbitron",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  weight: ["500", "700", "900"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const body = Manrope({
-  variable: "--font-manrope",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Vikrant | AI Engineer Portfolio",
-  description: "Cinematic orange AI portfolio built with Next.js, TypeScript, and modular architecture.",
+  title: "Vikrant Honbute | AI Engineer Portfolio",
+  description:
+    "Full portfolio for Vikrant Honbute, AI Engineer focused on GenAI, RAG systems, and production LLM applications.",
 };
 
 export default function RootLayout({
@@ -32,9 +29,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
+        <CursorGlow />
         {children}
       </body>
     </html>

@@ -13,56 +13,66 @@ export type Project = {
     status: "Live" | "Building" | "Prototype";
     askAiNamespace: string;
     metrics: ProjectMetric[];
+    watchDemoHref: string;
+    githubHref: string;
+    contextPrompt: string;
 };
 
 export const projects: Project[] = [
     {
-    id: "react-engine",
-    code: "VK-01",
-    title: "React Engine",
-    summary:
-        "High-performance frontend architecture for interactive product experiences with cinematic UX.",
-    stack: ["Next.js", "TypeScript", "Tailwind"],
-    href: "#projects",
+        id: "ai-recruitment-agent",
+        code: "PRJ-01",
+        title: "AI Recruitment Agent",
+        summary:
+            "End-to-end AI recruitment system for resume analysis, JD similarity search, interview Q&A generation, and automated feedback using RAG + LLMs.",
+        stack: [
+            "Python",
+            "LangChain",
+            "Groq API",
+            "FAISS",
+            "Pinecone",
+            "Streamlit",
+            "Docker",
+        ],
+        href: "#projects",
     status: "Live",
-    askAiNamespace: "project-react-engine",
+        askAiNamespace: "project-ai-recruitment-agent",
     metrics: [
-        { label: "Perf", value: "96 Lighthouse" },
-        { label: "SEO", value: "A-grade" },
-        { label: "Uptime", value: "99.9%" },
+            { label: "Pipeline", value: "RAG + LLM" },
+            { label: "Search", value: "FAISS + Pinecone" },
+            { label: "Mode", value: "End-to-End" },
     ],
+        watchDemoHref: "#",
+        githubHref: "https://github.com/vikrant-honbute",
+        contextPrompt:
+            "This project focuses on AI recruitment workflows, resume/JD matching, interview question generation, and automated candidate feedback with RAG.",
     },
     {
-    id: "runtime-logic",
-    code: "VK-02",
-    title: "Runtime Logic",
+        id: "quick-clip",
+        code: "PRJ-02",
+        title: "Quick Clip - AI Short Video Generator",
     summary:
-        "Backend service design focused on robust APIs, clear contracts, and retrieval-first AI workflows.",
-    stack: ["FastAPI", "LangChain", "Pinecone"],
+            "Scalable AI pipeline for automated short video generation - LLM scripting, voice synthesis, video rendering, and semantic titling end-to-end.",
+        stack: [
+            "Next.js",
+            "Gemini 2.5 Flash",
+            "Firebase",
+            "Replicate API",
+            "Google TTS",
+            "Docker",
+        ],
     href: "#projects",
     status: "Building",
-    askAiNamespace: "project-runtime-logic",
+        askAiNamespace: "project-quick-clip",
     metrics: [
-        { label: "Latency", value: "< 300ms" },
-        { label: "Contexts", value: "Multi-namespace" },
-        { label: "Security", value: "Input-validated" },
+            { label: "Engine", value: "LLM + TTS + Video" },
+            { label: "Flow", value: "Automated" },
+            { label: "Scale", value: "Cloud-ready" },
     ],
-    },
-    {
-    id: "cloud-ready",
-    code: "VK-03",
-    title: "Cloud Ready",
-    summary:
-        "Deployment architecture tuned for reliability on Vercel and Render with production observability.",
-    stack: ["Vercel", "Render", "CI/CD"],
-    href: "#projects",
-    status: "Prototype",
-    askAiNamespace: "project-cloud-ready",
-    metrics: [
-        { label: "Regions", value: "Global Edge" },
-        { label: "Build", value: "Automated" },
-        { label: "Rollbacks", value: "Instant" },
-    ],
+        watchDemoHref: "#",
+        githubHref: "https://github.com/vikrant-honbute",
+        contextPrompt:
+            "This project automates short video creation with LLM script generation, TTS narration, rendering pipelines, and AI-powered titles.",
     },
 ];
 

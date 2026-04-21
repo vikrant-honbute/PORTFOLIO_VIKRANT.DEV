@@ -3,25 +3,29 @@ import { skillGroups } from "@/data/skills";
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="px-6 py-14 sm:px-10 lg:px-16 lg:py-20">
+    <section id="skills" className="px-5 py-14 sm:px-8 lg:px-12 lg:py-20">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Skills"
-          title="Core capabilities across UI, backend, and AI pipelines."
-          description="Focused on maintainable code, product velocity, and reliable systems from prototype to production."
+          title="Technical Stack"
+          description="Core technologies used across AI applications, backend systems, and deployment workflows."
         />
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
           {skillGroups.map((group) => (
-            <article key={group.title} className="rounded-2xl border border-white/10 bg-black/30 p-6">
-              <h3 className="font-display text-xl text-white">{group.title}</h3>
-              <ul className="mt-4 space-y-2">
+            <article key={group.title} className="surface-card rounded-xl p-5 sm:p-6">
+              <h3 className="text-xl font-bold text-white">{group.title}</h3>
+              <ul className="mt-4 flex flex-wrap gap-2">
                 {group.items.map((item) => (
                   <li
-                    key={item}
-                    className="rounded-lg border border-white/8 bg-white/[0.02] px-3 py-2 text-sm text-white/72"
+                    key={item.name}
+                    className={`rounded-md border border-[var(--line-border)] px-2.5 py-1.5 text-xs transition orange-glow-hover ${
+                      item.featured
+                        ? "bg-[rgba(255,106,0,0.14)] text-[var(--foreground)]"
+                        : "bg-black/20 text-[var(--text-muted)]"
+                    }`}
                   >
-                    {item}
+                    {item.name}
                   </li>
                 ))}
               </ul>

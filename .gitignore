@@ -1,41 +1,137 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# =========================
+# Dependency directories
+# =========================
+node_modules/
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+.pnpm-store/
+.npm/
 
-# testing
-/coverage
+# =========================
+# Build outputs and generated artifacts
+# =========================
+.next/
+out/
+build/
+dist/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+next-env.d.ts
+.eslintcache
+.cache/
 
-# next.js
-/.next/
-/out/
+# =========================
+# Python virtual environments and caches
+# =========================
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py,cover
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+site/
 
-# production
-/build
-
-# misc
-.DS_Store
+# =========================
+# Environment and secrets
+# =========================
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.template
+!.env*.template
 *.pem
+*.key
+*.crt
+*.p12
+*.pfx
 
-# debug
+# =========================
+# Logs and runtime files
+# =========================
+*.log
+logs/
+*.out
+*.err
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# =========================
+# OS-specific junk files
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+.nfs*
 
-# vercel
-.vercel
+# =========================
+# IDE and editor files
+# =========================
+.vscode/
+.idea/
+*.iml
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+*.swp
+*.swo
+*~
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# =========================
+# Deployment and cloud tooling
+# =========================
+.vercel/
+.vercel-cache/
+.netlify/
+.terraform/
+*.tfstate
+*.tfstate.*
+.serverless/
+.aws-sam/
+
+# =========================
+# Local databases / vector artifacts
+# =========================
+*.sqlite3
+*.db
+*.db-journal
+chroma/
+chroma_db/
+*.parquet
