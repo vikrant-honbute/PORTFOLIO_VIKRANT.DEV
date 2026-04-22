@@ -4,11 +4,11 @@ import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import {
   Brain,
+  Cpu,
   Download,
   GitBranch,
-  Github,
   Layout,
-  Linkedin,
+  Link,
   Mail,
   MapPin,
   Network,
@@ -16,8 +16,6 @@ import {
   Server,
   ShieldCheck,
   Sparkles,
-  Stethoscope,
-  Twitter,
 } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 
@@ -62,7 +60,7 @@ const PROJECTS: InfoItem[] = [
     desc: "Training -> deployment -> monitoring",
   },
   {
-    icon: Stethoscope,
+    icon: Cpu,
     title: "Doctor Appointment System",
     desc: "Agentic AI with LangGraph",
   },
@@ -130,7 +128,7 @@ function SectionLabel({ children }: SectionLabelProps) {
   return (
     <div className="mb-5 flex items-center gap-2">
       <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
+      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-300">
         {children}
       </h3>
     </div>
@@ -167,8 +165,8 @@ function InfoCard({ icon: Icon, title, desc }: InfoCardProps) {
         <Icon className="h-5 w-5" />
       </div>
       <div>
-        <h4 className="font-semibold text-neutral-900">{title}</h4>
-        <p className="mt-0.5 text-sm text-neutral-600">{desc}</p>
+        <h4 className="font-semibold text-neutral-100">{title}</h4>
+        <p className="mt-0.5 text-sm text-neutral-300">{desc}</p>
       </div>
     </article>
   );
@@ -195,8 +193,8 @@ function ProjectCard({ icon: Icon, title, desc, delay }: ProjectCardProps) {
       }}
     >
       <Icon className="mb-3 h-6 w-6 text-orange-500" />
-      <h4 className="font-semibold text-neutral-900">{title}</h4>
-      <p className="mt-1 text-sm text-neutral-600">{desc}</p>
+      <h4 className="font-semibold text-neutral-100">{title}</h4>
+      <p className="mt-1 text-sm text-neutral-300">{desc}</p>
     </article>
   );
 }
@@ -215,36 +213,43 @@ function Badge({ children }: BadgeProps) {
 
 function ProfileCard() {
   const socialLinks = [
-    { icon: Github, label: "GitHub", href: "https://github.com/vikrant-honbute" },
-    { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/vikranthonbute" },
+    { icon: GitBranch, label: "GitHub", href: "https://github.com/vikrant-honbute" },
+    { icon: Link, label: "LinkedIn", href: "https://linkedin.com/in/vikranthonbute" },
     { icon: Mail, label: "Email", href: "mailto:vikranthonbute2004@gmail.com" },
-    { icon: Twitter, label: "Twitter", href: "https://twitter.com" },
   ];
 
   return (
-    <aside className="rounded-2xl border border-neutral-200 bg-white/70 p-6 backdrop-blur-sm lg:sticky lg:top-24">
+    <aside
+      className="rounded-2xl p-6 lg:sticky lg:top-24"
+      style={{
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(249,115,22,0.15)",
+        backdropFilter: "blur(20px)",
+      }}
+    >
       <div className="flex flex-col items-center text-center">
-        <div className="h-32 w-32 overflow-hidden rounded-full ring-4 ring-orange-500/20">
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-400 to-orange-600 text-4xl font-bold text-white">
-            V
+        <div className="relative h-32 w-32">
+          <div className="absolute inset-2 rounded-full bg-[#f97316]/25 blur-xl" aria-hidden="true" />
+          <div className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-[#f97316] bg-[#0a0a0a] text-4xl font-bold text-white">
+            VH
           </div>
         </div>
 
-        <h3 className="mt-5 text-xl font-bold text-neutral-900">Vikrant</h3>
-        <p className="mt-1 text-sm text-neutral-600">AI & Full-Stack Developer</p>
+        <h3 className="mt-5 text-xl font-bold text-white">Vikrant Honbute</h3>
+        <p className="mt-1 font-mono text-sm text-[#f97316]">AI & Full-Stack Developer</p>
 
-        <div className="mt-3 flex items-center gap-1.5 text-sm text-neutral-500">
+        <div className="mt-3 flex items-center gap-1.5 text-sm text-white/70">
           <MapPin className="h-4 w-4" />
           <span>Pune, India</span>
         </div>
 
-        <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-600">
-          <span className="h-2 w-2 rounded-full bg-green-500" />
+        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-black/40 px-3 py-1 text-xs font-medium text-green-400">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
           Open to Work
         </div>
       </div>
 
-      <div className="my-6 h-px bg-neutral-200" />
+      <div className="my-6 h-px bg-white/10" />
 
       <div className="flex justify-center gap-2">
         {socialLinks.map(({ icon: Icon, label, href }) => (
@@ -254,16 +259,17 @@ function ProfileCard() {
             aria-label={label}
             target={href.startsWith("mailto:") ? undefined : "_blank"}
             rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 text-neutral-600 transition-colors hover:border-orange-500 hover:text-orange-500"
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-xs font-medium text-white/85 transition-colors hover:border-[#f97316] hover:text-[#f97316]"
           >
             <Icon className="h-4 w-4" />
+            <span>{label}</span>
           </a>
         ))}
       </div>
 
       <a
         href="/resume.pdf"
-        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 transition-colors hover:border-orange-500 hover:text-orange-500"
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#f97316] px-4 py-2.5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#fb923c]"
       >
         <Download className="h-4 w-4" />
         Download Resume
@@ -278,7 +284,7 @@ export default function About() {
       <div className="grid gap-12 lg:grid-cols-5">
         <div className="space-y-14 lg:col-span-3">
           <Section label="About Me" delay={0}>
-            <h2 className="text-4xl font-bold tracking-tight text-neutral-900 md:text-5xl">
+            <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
               Hi, I&apos;m Vikrant <span className="inline-block">👋</span>
             </h2>
             <p className="mt-5 text-base leading-relaxed text-neutral-600 md:text-lg">
