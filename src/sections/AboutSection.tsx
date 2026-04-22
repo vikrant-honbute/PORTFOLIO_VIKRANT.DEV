@@ -1,5 +1,6 @@
 import SectionHeading from "@/components/SectionHeading";
 import { aboutStats, profile } from "@/data/profile";
+import AboutRightColumn from "@/components/AboutRightColumn";
 
 // ── Monogram / identity card ──────────────────────────────────────────────
 function ProfileVisual() {
@@ -97,40 +98,7 @@ export default function AboutSection() {
 
         {/* ── Right — Bio + Stats ─────────────────────────── */}
         <div className="py-2 lg:pl-8 lg:border-l lg:border-[var(--line-border)]">
-          <SectionHeading
-            eyebrow="About"
-            title="Building practical products, not just prototypes"
-            description={`${profile.shortBio} ${profile.longBio}`}
-          />
-
-          <div className="mt-5 flex flex-wrap gap-x-8 gap-y-2 border-t border-[var(--line-border)] pt-5">
-            {aboutStats.map((stat) => (
-              <div key={stat.label}>
-                <p className="font-mono-ui text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">{stat.label}</p>
-                <p className="mt-0.5 text-sm font-semibold text-white">{stat.value}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* What I work on */}
-          <div className="mt-6">
-            <p className="font-mono-ui text-[11px] uppercase tracking-[0.16em] text-[var(--primary-accent)] mb-4">
-              What I work on
-            </p>
-            <ul className="mt-4 space-y-3">
-              {[
-                { icon: "⬡", text: "RAG pipelines with Pinecone vector search and LangChain" },
-                { icon: "⬡", text: "LLM agents using LangGraph, CrewAI and tool calling" },
-                { icon: "⬡", text: "Production FastAPI backends for AI-powered applications" },
-                { icon: "⬡", text: "Full-stack AI products with Next.js + Python" },
-              ].map((item) => (
-                <li key={item.text} className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
-                  <span className="mt-0.5 text-[var(--primary-accent)]">{item.icon}</span>
-                  <span>{item.text}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <AboutRightColumn bioText={`${profile.shortBio} ${profile.longBio}`} />
         </div>
       </div>
     </section>
