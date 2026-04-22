@@ -1,6 +1,5 @@
-import SectionHeading from "@/components/SectionHeading";
-import { aboutStats, profile } from "@/data/profile";
 import AboutRightColumn from "@/components/AboutRightColumn";
+import { profile } from "@/data/profile";
 
 // ── Monogram / identity card ──────────────────────────────────────────────
 function ProfileVisual() {
