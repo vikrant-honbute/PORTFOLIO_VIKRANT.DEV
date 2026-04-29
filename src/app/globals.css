@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-* { cursor: none; }
+* {
+  cursor: none;
+}
 
 :root {
   --background: #060402;
@@ -68,5 +70,10 @@ body {
   box-shadow: 0 0 20px rgba(255, 122, 24, 0.16);
 }
 
-.text-accent { color: var(--primary-accent); }
-.border-accent { border-color: var(--line-border); }
+.text-accent {
+  color: var(--primary-accent);
+}
+
+.border-accent {
+  border-color: var(--line-border);
+}

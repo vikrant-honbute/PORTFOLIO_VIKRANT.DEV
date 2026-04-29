@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import Lottie from "lottie-react";
 import {
   Brain,
   Cpu,
@@ -10,7 +12,6 @@ import {
   Layout,
   Link,
   Mail,
-  MapPin,
   Network,
   Rocket,
   Server,
@@ -128,7 +129,7 @@ function SectionLabel({ children }: SectionLabelProps) {
   return (
     <div className="mb-5 flex items-center gap-2">
       <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-300">
+      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-100">
         {children}
       </h3>
     </div>
@@ -161,12 +162,12 @@ type InfoCardProps = {
 function InfoCard({ icon: Icon, title, desc }: InfoCardProps) {
   return (
     <article className="group flex gap-4">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-200 transition-colors group-hover:border-orange-500/60 group-hover:text-orange-500">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-700 transition-colors group-hover:border-orange-500/60 group-hover:text-orange-500">
         <Icon className="h-5 w-5" />
       </div>
       <div>
-        <h4 className="font-semibold text-neutral-100">{title}</h4>
-        <p className="mt-0.5 text-sm text-neutral-300">{desc}</p>
+        <h4 className="font-semibold text-white">{title}</h4>
+        <p className="mt-0.5 text-sm text-neutral-200">{desc}</p>
       </div>
     </article>
   );
@@ -185,7 +186,7 @@ function ProjectCard({ icon: Icon, title, desc, delay }: ProjectCardProps) {
   return (
     <article
       ref={ref}
-      className="rounded-xl border border-neutral-200 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/50"
+      className="rounded-xl border border-neutral-700 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/50"
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(24px)",
@@ -193,8 +194,8 @@ function ProjectCard({ icon: Icon, title, desc, delay }: ProjectCardProps) {
       }}
     >
       <Icon className="mb-3 h-6 w-6 text-orange-500" />
-      <h4 className="font-semibold text-neutral-100">{title}</h4>
-      <p className="mt-1 text-sm text-neutral-300">{desc}</p>
+      <h4 className="font-semibold text-white">{title}</h4>
+      <p className="mt-1 text-sm text-neutral-200">{desc}</p>
     </article>
   );
 }
@@ -205,13 +206,21 @@ type BadgeProps = {
 
 function Badge({ children }: BadgeProps) {
   return (
-    <span className="cursor-default rounded-md border border-neutral-200 px-3 py-1 text-sm text-neutral-700 transition-colors hover:border-orange-500 hover:text-orange-500">
+    <span className="cursor-default rounded-md border border-neutral-200 px-3 py-1 text-sm text-neutral-300 transition-colors hover:border-orange-500 hover:text-orange-500">
       {children}
     </span>
   );
 }
 
 function ProfileCard() {
+  const [animationData, setAnimationData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch("/animations/robot-mascot.json")
+      .then((res) => res.json())
+      .then((data) => setAnimationData(data));
+  }, []);
+
   const socialLinks = [
     { icon: GitBranch, label: "GitHub", href: "https://github.com/vikrant-honbute" },
     { icon: Link, label: "LinkedIn", href: "https://linkedin.com/in/vikranthonbute" },
@@ -227,49 +236,54 @@ function ProfileCard() {
         backdropFilter: "blur(20px)",
       }}
     >
-      <div className="flex flex-col items-center text-center">
-        <div className="relative h-32 w-32">
-          <div className="absolute inset-2 rounded-full bg-[#f97316]/25 blur-xl" aria-hidden="true" />
-          <div className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-[#f97316] bg-[#0a0a0a] text-4xl font-bold text-white">
-            VH
+      {/* Main layout: social links on left, mascot on right */}
+      <div className="flex items-center gap-0">
+        {/* Social links — positioned at the mascot's pointing finger */}
+        <div className="flex shrink-0 flex-col items-start gap-2.5 pb-12">
+          <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
+            Explore more
+            <br />
+            about me ↗
+          </p>
+          {socialLinks.map(({ icon: Icon, label, href }) => (
+            <a
+              key={label}
+              href={href}
+              aria-label={label}
+              target={href.startsWith("mailto:") ? undefined : "_blank"}
+              rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
+              className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2.5 text-xs font-medium text-white/85 backdrop-blur-sm transition-all hover:border-[#f97316] hover:text-[#f97316] hover:shadow-[0_0_12px_rgba(249,115,22,0.15)]"
+            >
+              <Icon className="h-4 w-4" />
+              <span>{label}</span>
+            </a>
+          ))}
+        </div>
+
+        {/* Lottie mascot */}
+        <div className="-ml-4 flex-1">
+          <div style={{ width: 340, height: 380, marginLeft: "auto" }}>
+            {animationData && (
+              <Lottie
+                animationData={animationData}
+                loop={true}
+                autoplay={true}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  clipPath: "inset(0 0 20% 0)",
+                  transform: "scale(1.1) translateY(10%)"
+                }}
+              />
+            )}
           </div>
         </div>
-
-        <h3 className="mt-5 text-xl font-bold text-white">Vikrant Honbute</h3>
-        <p className="mt-1 font-mono text-sm text-[#f97316]">AI & Full-Stack Developer</p>
-
-        <div className="mt-3 flex items-center gap-1.5 text-sm text-white/70">
-          <MapPin className="h-4 w-4" />
-          <span>Pune, India</span>
-        </div>
-
-        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-black/40 px-3 py-1 text-xs font-medium text-green-400">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-          Open to Work
-        </div>
       </div>
 
-      <div className="my-6 h-px bg-white/10" />
-
-      <div className="flex justify-center gap-2">
-        {socialLinks.map(({ icon: Icon, label, href }) => (
-          <a
-            key={label}
-            href={href}
-            aria-label={label}
-            target={href.startsWith("mailto:") ? undefined : "_blank"}
-            rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-xs font-medium text-white/85 transition-colors hover:border-[#f97316] hover:text-[#f97316]"
-          >
-            <Icon className="h-4 w-4" />
-            <span>{label}</span>
-          </a>
-        ))}
-      </div>
-
+      {/* Download Resume */}
       <a
         href="/resume.pdf"
-        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#f97316] px-4 py-2.5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#fb923c]"
+        className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#f97316] px-4 py-2.5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#fb923c]"
       >
         <Download className="h-4 w-4" />
         Download Resume
@@ -287,7 +301,7 @@ export default function About() {
             <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
               Hi, I&apos;m Vikrant <span className="inline-block">👋</span>
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-neutral-600 md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-neutral-300 md:text-lg">
               A final-year AI & Data Science student at VIIT, focused on building
               real-world AI systems and scalable applications. I work at the
               intersection of Machine Learning, Generative AI, and full-stack
@@ -316,7 +330,7 @@ export default function About() {
               {FOCUS.map((focus) => (
                 <span
                   key={focus}
-                  className="inline-flex items-center gap-2 rounded-full border border-neutral-200 px-3 py-1.5 text-sm text-neutral-700"
+                  className="inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm text-neutral-300"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
                   {focus}
@@ -334,7 +348,7 @@ export default function About() {
           </Section>
 
           <Section label="Personality" delay={500}>
-            <blockquote className="border-l-2 border-orange-500 pl-4 italic leading-relaxed text-neutral-600">
+            <blockquote className="border-l-2 border-orange-500 pl-4 italic leading-relaxed text-neutral-400">
               I prefer learning by building real-world systems rather than just
               theory. I&apos;m focused on becoming an industry-ready developer who
               can bridge AI with scalable applications.
