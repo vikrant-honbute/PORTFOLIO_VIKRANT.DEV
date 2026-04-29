@@ -5,7 +5,7 @@ import { profile, heroStats } from "@/data/profile";
 
 // ── Name typing animation ────────────────────────────────────────────────────
 const FULL_NAME = "Vikrant Honbute";
-const ROLE_LINE = "AI Engineer · GenAI Developer";
+const ROLE_LINE = "AI Engineer · GenAI Developer · ML Engineer";
 
 function NameTypingBlock() {
   const [nameChars, setNameChars] = useState(0);
@@ -39,8 +39,10 @@ function NameTypingBlock() {
 
       {/* Name */}
       <div className="mt-5 min-h-[4.5rem] flex items-center justify-center">
-        <h2 className="text-[clamp(2rem,5.5vw,3rem)] font-bold leading-tight tracking-tight text-white">
-          {FULL_NAME.slice(0, nameChars)}
+        <h2 className="text-[clamp(2.3rem,5.8vw,3.5rem)] font-bold leading-tight tracking-tight">
+          <span className="bg-gradient-to-r from-[var(--primary-accent)] to-amber-400 bg-clip-text text-transparent">
+            {FULL_NAME.slice(0, nameChars)}
+          </span>
           <span
             className={`inline-block w-[3px] h-[1.1em] translate-y-[0.1em] ml-1 bg-[var(--primary-accent)] transition-opacity ${
               cursorBlink ? "opacity-100" : "opacity-20"
@@ -126,11 +128,11 @@ export default function HeroSection() {
         {/* ── Left — Copy ─────────────────────────────────────────────── */}
         <div className="flex flex-col justify-center">
           <p className="font-mono-ui text-[11px] uppercase tracking-[0.22em] text-[var(--primary-accent)]/70 mb-6">
-            &gt; AI Engineer · GenAI Developer · LLM Systems
+            &gt; AI Engineer · GenAI Developer · ML Engineer · LLM Systems
           </p>
 
           {/* Headline */}
-          <h1 className="mt-6 text-[clamp(3rem,7vw,5.5rem)] font-bold leading-[1.08] tracking-tight text-white">
+          <h1 className="mt-6 text-[clamp(2.8rem,6.4vw,4.8rem)] font-bold leading-[1.08] tracking-tight text-white">
             {profile.headingPrimary}{" "}
             <span className="bg-gradient-to-r from-[var(--primary-accent)] to-amber-400 bg-clip-text text-transparent">
               {profile.headingAccent}

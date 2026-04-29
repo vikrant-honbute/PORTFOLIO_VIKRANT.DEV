@@ -282,7 +282,8 @@ function ProfileCard() {
 
       {/* Download Resume */}
       <a
-        href="/resume.pdf"
+        href="/resume/vikrant-honbute-resume.pdf"
+        download
         className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#f97316] px-4 py-2.5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#fb923c]"
       >
         <Download className="h-4 w-4" />

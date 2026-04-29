@@ -7,7 +7,7 @@ export const profile = {
   name: "Vikrant Honbute",
   brand: "VIKRANT.DEV",
   terminalLine: "> vikrant@ai:~$ initializing portfolio",
-  roleLine: "AI Engineer · GenAI Developer · LLM Systems",
+  roleLine: "AI Engineer · GenAI Developer · ML Engineer · LLM Systems",
   headingPrimary: "I build AI",
   headingAccent: "that actually works.",
   shortBio:
