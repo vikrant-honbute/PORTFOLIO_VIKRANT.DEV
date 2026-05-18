@@ -46,7 +46,7 @@ export default function Navbar() {
                         rel="noreferrer"
                         className="rounded-md border border-[var(--line-border)] bg-[rgba(255,106,0,0.08)] px-3 py-2 text-xs uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
                     >
-                        Download PDF
+                        Download Resume
                     </a>
                 </div>
             </div>

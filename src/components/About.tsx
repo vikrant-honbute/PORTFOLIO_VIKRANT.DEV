@@ -294,7 +294,7 @@ function ProfileCard() {
           className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#f97316]/30 bg-[#f97316]/10 px-4 py-2.5 text-sm font-bold text-[#f97316] transition-colors hover:bg-[#f97316]/20"
         >
           <Download className="h-4 w-4" />
-          Download PDF
+          Download Resume
         </a>
       </div>
       <ResumePreviewModal
