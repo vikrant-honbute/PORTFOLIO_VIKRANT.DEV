@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SYSTEM_PROMPT = "You are a professional message writer. Convert the user's raw input into a clean, professional outreach message. Use ONLY what the user has written — do not add any contact details, email addresses, LinkedIn URLs, names, or any information not present in the user's input. Keep the same intent and meaning, just make it professional and well structured. Return only the message body, nothing else.";
-
+const SYSTEM_PROMPT = `You are an AI assistant helping a user write a professional outreach message to Vikrant.
+Your task is to rewrite the user's rough input into a polished, formal message directed TO Vikrant, written FROM the perspective of the user (first-person "I" or "We").
+CRITICAL RULES:
+1. DO NOT act as a middleman or narrator (Never say "The user wants to tell you", "I have been asked to communicate", etc.).
+2. Write directly as if you are the user emailing Vikrant (e.g., "Hi Vikrant, I would like to...").
+3. Use ONLY the information provided in the user's input. Do not invent details.
+4. Keep the same intent, just make it professional.
+5. Return ONLY the drafted message body, nothing else.`;
 export async function POST(req: NextRequest) {
   try {
     const { rawMessage } = await req.json();
