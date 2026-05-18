@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import Lottie from "lottie-react";
 import {
   Brain,
   Cpu,
@@ -213,14 +211,6 @@ function Badge({ children }: BadgeProps) {
 }
 
 function ProfileCard() {
-  const [animationData, setAnimationData] = useState<any>(null);
-
-  useEffect(() => {
-    fetch("/animations/robot-mascot.json")
-      .then((res) => res.json())
-      .then((data) => setAnimationData(data));
-  }, []);
-
   const socialLinks = [
     { icon: GitBranch, label: "GitHub", href: "https://github.com/vikrant-honbute" },
     { icon: Link, label: "LinkedIn", href: "https://linkedin.com/in/vikranthonbute" },
@@ -229,22 +219,40 @@ function ProfileCard() {
 
   return (
     <aside
-      className="rounded-2xl p-6 lg:sticky lg:top-24"
+      className="overflow-hidden rounded-2xl p-5 lg:sticky lg:top-24"
       style={{
         background: "rgba(255,255,255,0.03)",
         border: "1px solid rgba(249,115,22,0.15)",
         backdropFilter: "blur(20px)",
       }}
     >
-      {/* Main layout: social links on left, mascot on right */}
-      <div className="flex items-center gap-0">
-        {/* Social links — positioned at the mascot's pointing finger */}
-        <div className="flex shrink-0 flex-col items-start gap-2.5 pb-12">
-          <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
-            Explore more
-            <br />
-            about me ↗
-          </p>
+      {/* Video mascot — prominent, full-width */}
+      <div className="relative mx-auto mb-5 w-full overflow-hidden rounded-xl">
+        {/* Subtle orange glow behind the bot */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background: "radial-gradient(ellipse 60% 60% at 50% 60%, rgba(249,115,22,0.12), transparent 70%)",
+          }}
+        />
+        <div style={{ aspectRatio: "4 / 3" }}>
+          <video
+            src="/animations/Bot_animation.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="relative z-[1] h-full w-full object-contain"
+          />
+        </div>
+      </div>
+
+      {/* Social links row */}
+      <div className="mb-4">
+        <p className="mb-2 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
+          Explore more about me ↗
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-2">
           {socialLinks.map(({ icon: Icon, label, href }) => (
             <a
               key={label}
@@ -252,31 +260,12 @@ function ProfileCard() {
               aria-label={label}
               target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
-              className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2.5 text-xs font-medium text-white/85 backdrop-blur-sm transition-all hover:border-[#f97316] hover:text-[#f97316] hover:shadow-[0_0_12px_rgba(249,115,22,0.15)]"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-3 py-2 text-xs font-medium text-white/85 backdrop-blur-sm transition-all hover:border-[#f97316] hover:text-[#f97316] hover:shadow-[0_0_12px_rgba(249,115,22,0.15)]"
             >
               <Icon className="h-4 w-4" />
               <span>{label}</span>
             </a>
           ))}
-        </div>
-
-        {/* Lottie mascot */}
-        <div className="-ml-4 flex-1">
-          <div style={{ width: 340, height: 380, marginLeft: "auto" }}>
-            {animationData && (
-              <Lottie
-                animationData={animationData}
-                loop={true}
-                autoplay={true}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  clipPath: "inset(0 0 20% 0)",
-                  transform: "scale(1.1) translateY(10%)"
-                }}
-              />
-            )}
-          </div>
         </div>
       </div>
 
