@@ -125,9 +125,12 @@ type SectionLabelProps = {
 
 function SectionLabel({ children }: SectionLabelProps) {
   return (
-    <div className="mb-5 flex items-center gap-2">
-      <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-100">
+    <div className="mb-6 flex items-center gap-3">
+      <div className="relative flex h-2 w-2 items-center justify-center">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-60"></span>
+        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+      </div>
+      <h3 className="text-[11px] font-semibold uppercase tracking-[0.25em] text-neutral-400">
         {children}
       </h3>
     </div>
@@ -159,13 +162,13 @@ type InfoCardProps = {
 
 function InfoCard({ icon: Icon, title, desc }: InfoCardProps) {
   return (
-    <article className="group flex gap-4">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-700 transition-colors group-hover:border-orange-500/60 group-hover:text-orange-500">
+    <article className="group flex gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-orange-500/30 hover:bg-white/[0.04]">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-black/50 text-neutral-400 transition-colors group-hover:text-orange-400">
         <Icon className="h-5 w-5" />
       </div>
       <div>
-        <h4 className="font-semibold text-white">{title}</h4>
-        <p className="mt-0.5 text-sm text-neutral-200">{desc}</p>
+        <h4 className="font-semibold text-neutral-100 transition-colors group-hover:text-white">{title}</h4>
+        <p className="mt-1 text-sm leading-relaxed text-neutral-400">{desc}</p>
       </div>
     </article>
   );
@@ -184,16 +187,16 @@ function ProjectCard({ icon: Icon, title, desc, delay }: ProjectCardProps) {
   return (
     <article
       ref={ref}
-      className="rounded-xl border border-neutral-700 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/50"
+      className="group rounded-xl border border-white/5 bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40 hover:bg-orange-500/5 hover:shadow-[0_8px_24px_-12px_rgba(249,115,22,0.2)]"
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(24px)",
         transitionDelay: `${delay}ms`,
       }}
     >
-      <Icon className="mb-3 h-6 w-6 text-orange-500" />
-      <h4 className="font-semibold text-white">{title}</h4>
-      <p className="mt-1 text-sm text-neutral-200">{desc}</p>
+      <Icon className="mb-3 h-6 w-6 text-neutral-500 transition-colors group-hover:text-orange-400" />
+      <h4 className="font-semibold text-neutral-100 transition-colors group-hover:text-white">{title}</h4>
+      <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">{desc}</p>
     </article>
   );
 }
@@ -204,7 +207,7 @@ type BadgeProps = {
 
 function Badge({ children }: BadgeProps) {
   return (
-    <span className="cursor-default rounded-md border border-neutral-200 px-3 py-1 text-sm text-neutral-300 transition-colors hover:border-orange-500 hover:text-orange-500">
+    <span className="cursor-default rounded-md border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-neutral-300 transition-all hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400">
       {children}
     </span>
   );
@@ -289,9 +292,13 @@ export default function About() {
         <div className="space-y-14 lg:col-span-3">
           <Section label="About Me" delay={0}>
             <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
-              Hi, I&apos;m Vikrant <span className="inline-block">👋</span>
+              Hi, I&apos;m{" "}
+              <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+                Vikrant
+              </span>{" "}
+              <span className="inline-block origin-bottom-right hover:animate-pulse">👋</span>
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-neutral-300 md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-neutral-400 md:text-lg">
               A final-year AI & Data Science student at VIIT, focused on building
               real-world AI systems and scalable applications. I work at the
               intersection of Machine Learning, Generative AI, and full-stack
@@ -338,11 +345,16 @@ export default function About() {
           </Section>
 
           <Section label="Personality" delay={500}>
-            <blockquote className="border-l-2 border-orange-500 pl-4 italic leading-relaxed text-neutral-400">
-              I prefer learning by building real-world systems rather than just
-              theory. I&apos;m focused on becoming an industry-ready developer who
-              can bridge AI with scalable applications.
-            </blockquote>
+            <div className="relative overflow-hidden rounded-xl border border-orange-500/20 bg-orange-500/5 p-6">
+              <div className="pointer-events-none absolute -right-4 -top-4 opacity-10">
+                <Brain className="h-24 w-24 text-orange-500" />
+              </div>
+              <blockquote className="relative z-10 italic leading-relaxed text-neutral-300">
+                &quot;I prefer learning by building real-world systems rather than just
+                theory. I&apos;m focused on becoming an industry-ready developer who
+                can bridge AI with scalable applications.&quot;
+              </blockquote>
+            </div>
           </Section>
         </div>
 
