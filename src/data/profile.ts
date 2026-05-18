@@ -10,6 +10,10 @@ export const profile = {
   roleLine: "AI Engineer · GenAI Developer · ML Engineer · LLM Systems",
   headingPrimary: "I build AI",
   headingAccent: "that actually works.",
+  resumePreviewUrl:
+    "https://drive.google.com/file/d/1PwNDfDqg3x2SPq5YxKDY51_rwaXGoEJv/preview",
+  resumeDownloadUrl:
+    "https://drive.google.com/uc?export=download&id=1PwNDfDqg3x2SPq5YxKDY51_rwaXGoEJv",
   shortBio:
     "Entry-level AI Engineer with hands-on experience in Generative AI, AI Agents, and RAG systems.",
   longBio:

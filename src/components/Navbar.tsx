@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { profile } from "@/data/profile";
+import ResumePreviewModal from "@/components/ResumePreviewModal";
 
 const navItems = [
     { label: "About", href: "#about" },
@@ -9,6 +13,8 @@ const navItems = [
 ];
 
 export default function Navbar() {
+    const [resumeOpen, setResumeOpen] = useState(false);
+
     return (
         <nav className="fixed left-0 top-0 z-50 w-full border-b border-white/[0.08] bg-white/[0.02] backdrop-blur-xl transition-colors duration-300">
             <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-12">
@@ -26,14 +32,29 @@ export default function Navbar() {
                     ))}
                 </ul>
 
-                <a
-                    href="/resume/vikrant-honbute-resume.pdf"
-                    download
-                    className="rounded-md border border-[var(--line-border)] bg-[rgba(255,106,0,0.08)] px-3 py-2 text-xs uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
-                >
-                    Download Resume
-                </a>
+                <div className="flex items-center gap-2">
+                    <button
+                        type="button"
+                        onClick={() => setResumeOpen(true)}
+                        className="rounded-md border border-[var(--line-border)] bg-[rgba(255,106,0,0.08)] px-3 py-2 text-xs uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
+                    >
+                        Preview Resume
+                    </button>
+                    <a
+                        href={profile.resumeDownloadUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-md border border-[var(--line-border)] bg-[rgba(255,106,0,0.08)] px-3 py-2 text-xs uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
+                    >
+                        Download PDF
+                    </a>
+                </div>
             </div>
+            <ResumePreviewModal
+                open={resumeOpen}
+                onClose={() => setResumeOpen(false)}
+                src={profile.resumePreviewUrl}
+            />
         </nav>
     );
 }

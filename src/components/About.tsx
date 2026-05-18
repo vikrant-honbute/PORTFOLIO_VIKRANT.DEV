@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import {
   Brain,
   Cpu,
   Download,
+  Eye,
   GitBranch,
   Layout,
   Link,
@@ -17,6 +19,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
+import { profile } from "@/data/profile";
+import ResumePreviewModal from "@/components/ResumePreviewModal";
 
 type InfoItem = {
   icon: LucideIcon;
@@ -214,6 +218,7 @@ function Badge({ children }: BadgeProps) {
 }
 
 function ProfileCard() {
+  const [resumeOpen, setResumeOpen] = useState(false);
   const socialLinks = [
     { icon: GitBranch, label: "GitHub", href: "https://github.com/vikrant-honbute" },
     { icon: Link, label: "LinkedIn", href: "https://linkedin.com/in/vikranthonbute" },
@@ -272,15 +277,31 @@ function ProfileCard() {
         </div>
       </div>
 
-      {/* Download Resume */}
-      <a
-        href="/resume/vikrant-honbute-resume.pdf"
-        download
-        className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#f97316] px-4 py-2.5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#fb923c]"
-      >
-        <Download className="h-4 w-4" />
-        Download Resume
-      </a>
+      {/* Resume Actions */}
+      <div className="mt-4 flex gap-2">
+        <button
+          type="button"
+          onClick={() => setResumeOpen(true)}
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-[#f97316] px-4 py-2.5 text-sm font-bold text-[#111111] transition-colors hover:bg-[#fb923c]"
+        >
+          <Eye className="h-4 w-4" />
+          Preview Resume
+        </button>
+        <a
+          href={profile.resumeDownloadUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#f97316]/30 bg-[#f97316]/10 px-4 py-2.5 text-sm font-bold text-[#f97316] transition-colors hover:bg-[#f97316]/20"
+        >
+          <Download className="h-4 w-4" />
+          Download PDF
+        </a>
+      </div>
+      <ResumePreviewModal
+        open={resumeOpen}
+        onClose={() => setResumeOpen(false)}
+        src={profile.resumePreviewUrl}
+      />
     </aside>
   );
 }
