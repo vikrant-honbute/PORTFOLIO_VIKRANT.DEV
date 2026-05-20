@@ -1,8 +1,11 @@
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR / ".env")
+load_dotenv(BASE_DIR.parent / ".env", override=False)
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,7 +18,7 @@ from rag.ingest import ingest_documents
 async def lifespan(app: FastAPI):
     print("Ingesting Vikrant knowledge base into Pinecone...")
     documents = load_markdown_kb()
-    count = ingest_documents("vikrant-portfolio", documents)
+    count = ingest_documents("portfolio-main", documents)
     print(f"Ingested {count} new documents. Backend ready.")
     yield
 

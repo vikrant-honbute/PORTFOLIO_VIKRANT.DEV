@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#120a05"/>
+      <stop offset="1" stop-color="#2d1204"/>
+    </linearGradient>
+    <radialGradient id="r" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 160) rotate(140) scale(520 340)">
+      <stop stop-color="#ff7a18" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ff7a18" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#g)"/>
+  <rect width="1280" height="720" fill="url(#r)"/>
+  <rect x="80" y="80" width="1120" height="560" rx="28" fill="#0b0704" stroke="#3a2416" stroke-width="2"/>
+  <rect x="116" y="120" width="420" height="60" rx="14" fill="#1a1009" stroke="#5a3418"/>
+  <text x="146" y="157" fill="#ffb36b" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Resume Intelligence</text>
+  <rect x="116" y="210" width="520" height="320" rx="20" fill="#120b06" stroke="#2c1b10"/>
+  <rect x="676" y="210" width="468" height="320" rx="20" fill="#120b06" stroke="#2c1b10"/>
+  <rect x="146" y="242" width="220" height="16" rx="8" fill="#2d1b10"/>
+  <rect x="146" y="274" width="370" height="16" rx="8" fill="#2d1b10"/>
+  <rect x="146" y="306" width="320" height="16" rx="8" fill="#2d1b10"/>
+  <rect x="146" y="352" width="440" height="122" rx="16" fill="#1a1009" stroke="#4a2b15"/>
+  <text x="170" y="392" fill="#ffd7b0" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Parsed resume</text>
+  <text x="170" y="426" fill="#c8b8aa" font-family="Arial, Helvetica, sans-serif" font-size="18">Vector search + structured extraction</text>
+  <rect x="706" y="242" width="388" height="16" rx="8" fill="#2d1b10"/>
+  <rect x="706" y="274" width="300" height="16" rx="8" fill="#2d1b10"/>
+  <rect x="706" y="306" width="346" height="16" rx="8" fill="#2d1b10"/>
+  <rect x="706" y="352" width="388" height="122" rx="16" fill="#1a1009" stroke="#4a2b15"/>
+  <text x="730" y="392" fill="#ffd7b0" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">AI Q&A</text>
+  <text x="730" y="426" fill="#c8b8aa" font-family="Arial, Helvetica, sans-serif" font-size="18">RAG answers with source context</text>
+</svg>

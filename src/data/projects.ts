@@ -3,6 +3,19 @@ export type ProjectMetric = {
     value: string;
 };
 
+export type ProjectMediaItem = {
+    type: "video" | "image";
+    src: string;
+    alt?: string;
+    poster?: string;
+};
+
+export type ProjectSnapshot = {
+    title: string;
+    description?: string;
+    items: ProjectMediaItem[];
+};
+
 export type Project = {
     id: string;
     code: string;
@@ -13,6 +26,7 @@ export type Project = {
     status: "Live" | "Building" | "Prototype";
     askAiNamespace: string;
     metrics: ProjectMetric[];
+    media?: ProjectSnapshot[];
     watchDemoHref: string;
     githubHref: string;
     contextPrompt: string;
@@ -35,15 +49,33 @@ export const projects: Project[] = [
             "Docker",
         ],
         href: "#projects",
-    status: "Live",
+        status: "Live",
         askAiNamespace: "project-ai-recruitment-agent",
-    metrics: [
+        metrics: [
             { label: "Pipeline", value: "RAG + LLM" },
             { label: "Search", value: "FAISS + Pinecone" },
             { label: "Mode", value: "End-to-End" },
-    ],
-        watchDemoHref: "#",
+        ],
+        watchDemoHref: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
         githubHref: "https://github.com/vikrant-honbute",
+        media: [
+            {
+                title: "Recruitment dashboard",
+                description: "Structured resume analysis and match scoring.",
+                items: [
+                    {
+                        type: "image",
+                        src: "/projects/ai-recruitment-agent/snapshot-1.svg",
+                        alt: "Recruitment dashboard snapshot",
+                    },
+                    {
+                        type: "image",
+                        src: "/projects/ai-recruitment-agent/snapshot-2.svg",
+                        alt: "Interview planner snapshot",
+                    },
+                ],
+            },
+        ],
         contextPrompt:
             "This project focuses on AI recruitment workflows, resume/JD matching, interview question generation, and automated candidate feedback with RAG.",
     },
@@ -61,14 +93,14 @@ export const projects: Project[] = [
             "Google TTS",
             "Docker",
         ],
-    href: "#projects",
-    status: "Building",
+        href: "#projects",
+        status: "Building",
         askAiNamespace: "project-quick-clip",
-    metrics: [
+        metrics: [
             { label: "Engine", value: "LLM + TTS + Video" },
             { label: "Flow", value: "Automated" },
             { label: "Scale", value: "Cloud-ready" },
-    ],
+        ],
         watchDemoHref: "#",
         githubHref: "https://github.com/vikrant-honbute",
         contextPrompt:

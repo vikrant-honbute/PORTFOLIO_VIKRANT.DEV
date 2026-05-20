@@ -20,7 +20,13 @@ def ingest_documents(namespace: str, documents: list[dict]) -> int:
             }
         })
     if vectors:
-        upsert_vectors(vectors)
+        ids = [v["id"] for v in vectors]
+        embeddings = [v["values"] for v in vectors]
+        metadatas = [v["metadata"] for v in vectors]
+        documents_text = [v["metadata"].get("text", "") for v in vectors]
+        # Use upsert_documents to store vectors into the correct Pinecone namespace
+        from rag.store import upsert_documents
+        upsert_documents(namespace, ids, embeddings, metadatas, documents_text)
     return len(vectors)
 
 ingest_namespace_documents = ingest_documents
