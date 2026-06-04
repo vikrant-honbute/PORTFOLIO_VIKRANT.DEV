@@ -20,10 +20,9 @@ export default function ExperienceSection() {
 
           {experiences.map((entry) => (
             <article key={entry.company} className="group relative pb-10 last:pb-0">
-              {/* Timeline Dot with Pulse */}
+              {/* Timeline Dot */}
               <span className="absolute -left-[3px] top-6 flex h-3.5 w-3.5 items-center justify-center sm:-left-[1px]">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-500 opacity-60"></span>
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.8)]"></span>
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-orange-500"></span>
               </span>
 
               <div className="relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-6 transition-all duration-500 hover:border-orange-500/30 hover:bg-white/[0.04] sm:p-8">
@@ -38,7 +37,7 @@ export default function ExperienceSection() {
 
                 <div className="relative z-10">
                   <div className="mb-6 flex flex-wrap items-center gap-3">
-                    <h3 className="text-2xl font-bold text-neutral-100">
+                    <h3 className="text-2xl font-bold text-white">
                       {entry.role} <span className="text-orange-500">@ {entry.company}</span>
                     </h3>
                     <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-medium text-orange-400">
@@ -55,8 +54,8 @@ export default function ExperienceSection() {
                         key={project.title}
                         className="rounded-xl border border-white/5 bg-black/40 p-5 transition-colors hover:border-white/10"
                       >
-                        <h4 className="text-lg font-semibold text-neutral-200">{project.title}</h4>
-                        <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+                        <h4 className="text-lg font-semibold text-white">{project.title}</h4>
+                        <p className="mt-2 text-sm leading-relaxed text-white/90">
                           {project.summary}
                         </p>
 
@@ -73,7 +72,7 @@ export default function ExperienceSection() {
 
                         <ul className="mt-4 space-y-2">
                           {project.contributions.map((item) => (
-                            <li key={item} className="flex gap-3 text-sm leading-relaxed text-neutral-300">
+                            <li key={item} className="flex gap-3 text-sm leading-relaxed text-white/90">
                               <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-orange-500"></span>
                               <span>{item}</span>
                             </li>

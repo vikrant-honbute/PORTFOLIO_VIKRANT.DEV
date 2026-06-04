@@ -6,8 +6,8 @@
 
 :root {
   --background: #060402;
-  --foreground: #f5ede4;
-  --text-muted: rgba(245, 237, 228, 0.55);
+  --foreground: #ffffff;
+  --text-muted: #ffffff;
   --card-surface: rgba(255, 255, 255, 0.028);
   --line-border: rgba(255, 112, 20, 0.18);
   --primary-accent: #ff6a00;
@@ -76,4 +76,14 @@ body {
 
 .border-accent {
   border-color: var(--line-border);
+}
+
+/* Force all grey/neutral text to be pure white globally */
+.text-neutral-100,
+.text-neutral-200,
+.text-neutral-300,
+.text-neutral-400,
+.text-neutral-500,
+.text-\[var\(--text-muted\)\] {
+  color: #ffffff !important;
 }

@@ -75,8 +75,7 @@ export default function AIChatWidget() {
           aria-label="Open AI assistant"
           className="group relative flex h-14 w-14 items-center justify-center rounded-full border border-[var(--line-border)] bg-[var(--primary-accent)] shadow-[0_0_24px_rgba(255,106,0,0.35)] transition-all duration-200 hover:scale-105 hover:shadow-[0_0_32px_rgba(255,106,0,0.5)]"
         >
-          {/* Pulse ring */}
-          <span className="absolute inset-0 animate-ping rounded-full bg-[var(--primary-accent)] opacity-20" />
+
 
           {/* Icon — bot when closed, X when open */}
           {open ? (

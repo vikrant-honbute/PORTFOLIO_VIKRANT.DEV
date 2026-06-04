@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { Project } from "@/data/projects";
+import Portal from "@/components/Portal";
 
 type ProjectCardProps = {
   project: Project;
@@ -76,48 +77,48 @@ function ProjectPreview({ project }: { project: Project }) {
       </div>
 
       {activeMode === "demo" ? (
-        <div className="flex min-h-[180px] flex-col items-center justify-center gap-2 px-3 py-4 text-center">
-          {hasDemo ? (
-            demoHref ? (
-              <iframe
-                src={`https://www.youtube.com/embed/${getYouTubeId(demoHref)}?rel=0&modestbranding=1`}
-                title={`${project.title} demo`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="aspect-video w-full max-w-[520px] rounded-md border border-[var(--line-border)]"
-              />
-            ) : demoSections[0]?.items[0]?.type === "video" ? (
-              <iframe
-                src={`https://www.youtube.com/embed/${getYouTubeId(demoSections[0].items[0].src)}?rel=0&modestbranding=1`}
-                title={`${project.title} demo`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="aspect-video w-full max-w-[520px] rounded-md border border-[var(--line-border)]"
-              />
-            ) : (
-              <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line-border)] bg-[rgba(255,106,0,0.08)]">
-                  <svg className="h-4.5 w-4.5 translate-x-0.5 text-[var(--primary-accent)]" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
-                  </svg>
+        <div className="flex flex-col items-center justify-center gap-2 px-2 py-3 text-center">
+          <div className="w-full max-w-[380px]">
+            <div className="aspect-video w-full rounded-md border border-[var(--line-border)] overflow-hidden bg-black/40 flex items-center justify-center">
+              {hasDemo ? (
+                demoHref ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${getYouTubeId(demoHref)}?rel=0&modestbranding=1`}
+                    title={`${project.title} demo`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="h-full w-full"
+                  />
+                ) : demoSections[0]?.items[0]?.type === "video" ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${getYouTubeId(demoSections[0].items[0].src)}?rel=0&modestbranding=1`}
+                    title={`${project.title} demo`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="h-full w-full"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-3 px-4">
+                    <div className="h-12 w-12 rounded-full bg-[rgba(255,106,0,0.12)] flex items-center justify-center">
+                      <svg className="h-5 w-5 text-[var(--primary-accent)]" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                      </svg>
+                    </div>
+                    <p className="text-[11px] text-[var(--text-muted)]">Add an unlisted YouTube demo link</p>
+                  </div>
+                )
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-3 px-4">
+                  <div className="h-12 w-12 rounded-full bg-[rgba(255,106,0,0.12)] flex items-center justify-center">
+                    <svg className="h-5 w-5 text-[var(--primary-accent)]" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                    </svg>
+                  </div>
+                  <p className="text-[11px] text-[var(--text-muted)]">Demo coming soon</p>
                 </div>
-                <p className="font-mono-ui text-[9px] uppercase tracking-[0.18em] text-[var(--text-muted)]">
-                  Add a YouTube unlisted demo link
-                </p>
-              </div>
-            )
-          ) : (
-            <>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line-border)] bg-[rgba(255,106,0,0.08)]">
-                <svg className="h-4.5 w-4.5 translate-x-0.5 text-[var(--primary-accent)]" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
-                </svg>
-              </div>
-              <p className="font-mono-ui text-[9px] uppercase tracking-[0.18em] text-[var(--text-muted)]">
-                Demo coming soon
-              </p>
-            </>
-          )}
+              )}
+            </div>
+          </div>
         </div>
       ) : hasSnapshots && activeSnapshot ? (
         <div className="flex flex-col gap-2 p-2">
@@ -397,20 +398,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {aiOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-end p-5" onClick={() => setAiOpen(false)}>
-          <div className="flex h-[560px] w-[480px] flex-col overflow-hidden rounded-xl border border-[var(--line-border)] bg-[#0c0804] shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between border-b border-[var(--line-border)] bg-black/40 px-4 py-3">
-              <div>
-                <p className="font-mono-ui text-[10px] uppercase tracking-[0.14em] text-[var(--primary-accent)]">Ask AI about</p>
-                <p className="text-sm font-semibold text-white">{project.title}</p>
+          <Portal>
+            <div className="fixed inset-0 z-50 flex items-end justify-end p-5" onClick={() => setAiOpen(false)}>
+              <div className="flex h-[560px] w-[480px] flex-col overflow-hidden rounded-xl border border-[var(--line-border)] bg-[#0c0804] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center justify-between border-b border-[var(--line-border)] bg-black/40 px-4 py-3">
+                  <div>
+                    <p className="font-mono-ui text-[10px] uppercase tracking-[0.14em] text-[var(--primary-accent)]">Ask AI about</p>
+                    <p className="text-sm font-semibold text-white">{project.title}</p>
+                  </div>
+                  <button onClick={() => setAiOpen(false)} className="rounded-md p-1 text-white/40 transition hover:text-white">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+                <AskAIPanel project={project} />
               </div>
-              <button onClick={() => setAiOpen(false)} className="rounded-md p-1 text-white/40 transition hover:text-white">
-                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </button>
             </div>
-            <AskAIPanel project={project} />
-          </div>
-        </div>
+          </Portal>
       )}
     </article>
   );

@@ -18,7 +18,7 @@ export default function SectionHeading({
       {eyebrow ? (
         <div className={`flex items-center gap-2 ${isCentered ? "justify-center" : ""}`}>
           <span className="h-px w-6 bg-[var(--primary-accent)]" />
-          <p className="font-mono-ui text-[11px] uppercase tracking-[0.18em] text-[var(--primary-accent)]">
+          <p className="font-mono-ui text-sm uppercase tracking-[0.18em] text-[var(--primary-accent)]">
             {eyebrow}
           </p>
         </div>
