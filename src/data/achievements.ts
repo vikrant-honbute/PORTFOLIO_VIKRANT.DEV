@@ -5,7 +5,14 @@ export const featuredAchievement = {
   year: "2025",
 };
 
-export const certifications = [
+export type Certification = {
+  id: string;
+  name: string;
+  issuer: string;
+  date?: string;
+};
+
+export const certifications: Certification[] = [
   {
     id: "cert-01",
     name: "Foundations of Data Science",
