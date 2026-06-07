@@ -34,7 +34,9 @@ export default function AchievementsSection() {
               <p className="font-mono-ui text-xs text-[var(--primary-accent)]">Certification</p>
               <h4 className="mt-2 text-base font-semibold text-white">{certification.name}</h4>
               <p className="mt-2 text-sm text-[var(--text-muted)]">{certification.issuer}</p>
-              <p className="mt-3 font-mono-ui text-[11px] text-white/65">{certification.date}</p>
+              {certification.date && (
+                <p className="mt-3 font-mono-ui text-[11px] text-white/65">{certification.date}</p>
+              )}
             </article>
           ))}
         </div>

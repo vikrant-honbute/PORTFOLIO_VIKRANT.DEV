@@ -45,7 +45,7 @@ export const profile = {
 export const heroStats: Stat[] = [
   { label: "CGPA", value: "8.18" },
   { label: "Internship", value: "1" },
-  { label: "Major Projects", value: "2" },
+  { label: "Projects", value: "15+" },
 ];
 
 export const aboutStats: Stat[] = [

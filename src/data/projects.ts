@@ -30,6 +30,9 @@ export type Project = {
     watchDemoHref: string;
     githubHref: string;
     contextPrompt: string;
+    suggestions?: string[];
+    defaultPrompt?: string;
+    highlights?: string[];
 };
 
 export const projects: Project[] = [
@@ -56,7 +59,7 @@ export const projects: Project[] = [
             { label: "Search", value: "FAISS + Pinecone" },
             { label: "Mode", value: "End-to-End" },
         ],
-        watchDemoHref: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
+        watchDemoHref: "#",
         githubHref: "https://github.com/vikrant-honbute",
         media: [
             {
@@ -65,13 +68,8 @@ export const projects: Project[] = [
                 items: [
                     {
                         type: "image",
-                        src: "/projects/ai-recruitment-agent/snapshot-1.svg",
+                        src: "/projects/ai-recruitment-agent/1.png",
                         alt: "Recruitment dashboard snapshot",
-                    },
-                    {
-                        type: "image",
-                        src: "/projects/ai-recruitment-agent/snapshot-2.svg",
-                        alt: "Interview planner snapshot",
                     },
                 ],
             },
@@ -83,7 +81,7 @@ export const projects: Project[] = [
         id: "quick-clip",
         code: "PRJ-02",
         title: "Quick Clip - AI Short Video Generator",
-    summary:
+        summary:
             "Scalable AI pipeline for automated short video generation - LLM scripting, voice synthesis, video rendering, and semantic titling end-to-end.",
         stack: [
             "Next.js",
@@ -94,7 +92,7 @@ export const projects: Project[] = [
             "Docker",
         ],
         href: "#projects",
-        status: "Building",
+        status: "Live",
         askAiNamespace: "project-quick-clip",
         metrics: [
             { label: "Engine", value: "LLM + TTS + Video" },
@@ -105,6 +103,52 @@ export const projects: Project[] = [
         githubHref: "https://github.com/vikrant-honbute",
         contextPrompt:
             "This project automates short video creation with LLM script generation, TTS narration, rendering pipelines, and AI-powered titles.",
+    },
+    {
+        id: "codeguardian",
+        code: "PRJ-03",
+        title: "CodeGuardian – AI Powered DevSecOps Agent",
+        summary:
+            "AI-powered security analysis platform that combines static code analysis, RAG, and LLM reasoning to detect vulnerabilities, explain security risks, suggest fixes, and generate risk-scored reports.",
+        stack: [
+            "Python",
+            "FastAPI",
+            "FAISS",
+            "RAG",
+            "OWASP",
+            "CWE",
+            "NVIDIA NIM",
+            "Docker",
+        ],
+        href: "#projects",
+        status: "Live",
+        askAiNamespace: "project-codeguardian",
+        metrics: [
+            { label: "ANALYSIS", value: "AST + SAST" },
+            { label: "KNOWLEDGE", value: "FAISS + RAG" },
+            { label: "SECURITY", value: "Risk Scoring" },
+        ],
+        watchDemoHref: "#",
+        githubHref: "https://github.com/vikrant-honbute",
+        contextPrompt:
+            "CodeGuardian is an AI-powered security analysis platform that combines static code analysis, RAG, and LLM reasoning to detect vulnerabilities, explain security risks, suggest fixes, and generate risk-scored reports. Key highlights: Multi-language vulnerability detection, AST-based static analysis, hardcoded secret detection, SQL injection detection, LLM-powered explanations, OWASP + CWE grounded reasoning, risk scoring engine, structured security reports, and offline fallback mode.",
+        suggestions: [
+            "Explain the architecture and security workflow of CodeGuardian.",
+            "What tech stack was used?",
+            "What was the hardest part?",
+        ],
+        defaultPrompt: "Explain the architecture and security workflow of CodeGuardian.",
+        highlights: [
+            "Multi-language vulnerability detection",
+            "AST-based static analysis",
+            "Hardcoded secret detection",
+            "SQL injection detection",
+            "LLM-powered explanations",
+            "OWASP + CWE grounded reasoning",
+            "Risk scoring engine",
+            "Structured security reports",
+            "Offline fallback mode",
+        ],
     },
 ];
 

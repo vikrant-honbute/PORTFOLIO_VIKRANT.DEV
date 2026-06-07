@@ -161,19 +161,24 @@ Generative AI, Video Automation, TTS, LLM Pipelines
 
 --------------------------------------------------
 
-3. CodeGuardian
+3. CodeGuardian – AI Powered DevSecOps Agent
 
 Description:
-Autonomous AI DevSecOps agent focused on code analysis and security workflows.
+AI-powered security analysis platform that combines static code analysis, RAG, and LLM reasoning to detect vulnerabilities, explain security risks, suggest fixes, and generate risk-scored reports.
 
 Features:
-- static analysis workflows
-- AI-assisted issue explanations
-- security-oriented automation
-- developer productivity tooling
+- Multi-language vulnerability detection
+- AST-based static analysis
+- Hardcoded secret detection
+- SQL injection detection
+- LLM-powered explanations
+- OWASP + CWE grounded reasoning
+- Risk scoring engine
+- Structured security reports
+- Offline fallback mode
 
 Concepts:
-DevSecOps, AI Agents, Static Analysis, Security Automation
+DevSecOps, AI Agents, Static Analysis, Security Automation, OWASP, CWE, FAISS, RAG, Risk Scoring
 
 --------------------------------------------------
 
@@ -214,9 +219,9 @@ International Conference on Emerging Smart Computing and Informatics
 CERTIFICATIONS
 ==================================================
 
-- Generative AI with Large Language Models — Coursera
-- AWS Cloud Foundations — AWS
-- Machine Learning Specialization — Coursera
+- Foundations of Data Science — Coursera
+- Ultimate RAG Bootcamp Using Langchain,LangGraph & Langsmith — Udemy
+- IBM Fullstack Course — IBM
 
 ==================================================
 SKILLS
@@ -243,7 +248,6 @@ AI/ML:
 - Pandas
 - spaCy
 - NLTK
-- MLflow
 - DVC
 - FAISS
 - Pinecone
@@ -263,6 +267,7 @@ DevOps & MLOps:
 - Docker Compose
 - GitHub Actions
 - CI/CD
+- MLflow
 - AWS (Basic)
 - Git
 

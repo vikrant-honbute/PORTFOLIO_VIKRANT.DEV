@@ -40,13 +40,8 @@ export default function SkillsSection() {
                   {group.items.map((item) => (
                     <li
                       key={item.name}
-                      className={`relative inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all duration-300 hover:-translate-y-0.5 ${
-                        item.featured
-                          ? "border-orange-500/30 bg-orange-500/10 text-orange-400 shadow-[0_0_12px_rgba(249,115,22,0.05)] hover:border-orange-500/60 hover:bg-orange-500/20 hover:text-orange-300 hover:shadow-[0_0_15px_rgba(249,115,22,0.15)]"
-                          : "border-white/10 bg-white/[0.03] text-neutral-400 hover:border-white/20 hover:bg-white/[0.08] hover:text-neutral-200"
-                      }`}
+                      className="relative inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 shadow-[0_0_12px_rgba(249,115,22,0.05)] hover:border-orange-500/60 hover:bg-orange-500/20 hover:text-orange-300 hover:shadow-[0_0_15px_rgba(249,115,22,0.15)] px-3.5 py-1.5 text-xs font-medium transition-all duration-300 hover:-translate-y-0.5"
                     >
-                      {item.featured && <span className="text-[10px] text-orange-500">✦</span>}
                       {item.name}
                     </li>
                   ))}

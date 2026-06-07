@@ -8,20 +8,17 @@ export const featuredAchievement = {
 export const certifications = [
   {
     id: "cert-01",
-    name: "Generative AI with Large Language Models",
+    name: "Foundations of Data Science",
     issuer: "Coursera",
-    date: "To be added",
   },
   {
     id: "cert-02",
-    name: "AWS Cloud Foundations",
-    issuer: "AWS",
-    date: "To be added",
+    name: "Ultimate RAG Bootcamp Using Langchain,LangGraph & Langsmith",
+    issuer: "Udemy",
   },
   {
     id: "cert-03",
-    name: "Machine Learning Specialization",
-    issuer: "Coursera",
-    date: "To be added",
+    name: "IBM Fullstack Course",
+    issuer: "IBM",
   },
 ];

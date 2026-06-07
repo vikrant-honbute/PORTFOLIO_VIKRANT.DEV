@@ -48,7 +48,7 @@ export default function ExperienceSection() {
                     </span>
                   </div>
 
-                  <div className="grid gap-4 lg:grid-cols-2">
+                  <div className="flex flex-col gap-4">
                     {entry.projects.map((project) => (
                       <article
                         key={project.title}

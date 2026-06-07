@@ -104,7 +104,7 @@ function ProjectPreview({ project }: { project: Project }) {
                         <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
                       </svg>
                     </div>
-                    <p className="text-[11px] text-[var(--text-muted)]">Add an unlisted YouTube demo link</p>
+                    <p className="text-[11px] text-[var(--text-muted)]">Demo coming soon</p>
                   </div>
                 )
               ) : (
@@ -178,16 +178,11 @@ function ProjectPreview({ project }: { project: Project }) {
               <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
             </svg>
           </div>
-          <p className="font-mono-ui text-[9px] uppercase tracking-[0.18em] text-[var(--text-muted)]">
-            Add snapshot images to project.media
+          <p className="font-mono-ui text-[10px] tracking-[0.12em] text-[var(--text-muted)]">
+            Snapshots coming soon
           </p>
         </div>
       )}
-
-      <div className="border-t border-[var(--line-border)] bg-black/25 px-3 py-1.5 text-[9px] text-[var(--text-muted)]">
-        {hasDemo ? "Demo tab is ready." : "Add an unlisted YouTube demo link to enable the Demo tab."}
-        {hasSnapshots ? " Snapshots tab is ready." : " Snapshots tab is visible for future images."}
-      </div>
     </div>
   );
 }
@@ -212,10 +207,10 @@ function AskAIPanel({ project }: { project: Project }) {
       text: `Hi! I know everything about ${project.title}. What would you like to know?`
     }
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(project.defaultPrompt ?? "");
   const [loading, setLoading] = useState(false);
 
-  const suggestions = ["What does this project do?", "What tech stack was used?", "What was the hardest part?"];
+  const suggestions = project.suggestions ?? ["What does this project do?", "What tech stack was used?", "What was the hardest part?"];
 
   async function send(text?: string) {
     const question = text ?? input.trim();
