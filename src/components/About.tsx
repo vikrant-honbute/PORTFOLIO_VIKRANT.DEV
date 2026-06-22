@@ -332,10 +332,7 @@ export default function About() {
               <span className="inline-block origin-bottom-right hover:animate-pulse">👋</span>
             </h2>
             <p className="mt-5 text-base leading-relaxed text-neutral-400 md:text-lg">
-              A final-year AI & Data Science student at Vishwakarma Institute of Information Technology, focused on building
-              real-world AI systems and scalable applications. I work at the
-              intersection of Machine Learning, Generative AI, and full-stack
-              development.
+              I’m a 2026 AI & Data Science graduate from Vishwakarma Institute of Information Technology, Pune, focused on building AI-powered applications, scalable backend systems, and modern web products. My work spans Machine Learning, Generative AI, Data Engineering, FastAPI, Django, React, and Next.js, with an emphasis on solving real-world problems through practical software engineering.
             </p>
           </Section>
 
