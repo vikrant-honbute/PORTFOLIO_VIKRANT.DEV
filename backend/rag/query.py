@@ -1,8 +1,12 @@
+"""RAG query logic — retrieves context from Pinecone and generates answers."""
+
 import os
 import importlib
 from dataclasses import dataclass
-from sentence_transformers import SentenceTransformer
+
 import google.generativeai as genai
+
+from rag.embeddings import embed_query
 from rag.store import query_vectors
 
 _groq_api_key = os.getenv("GROQ_API_KEY")
@@ -15,13 +19,13 @@ if _groq_api_key:
         _groq_client = importlib.import_module("groq").Groq(api_key=_groq_api_key)
     except Exception:
         _groq_client = None
-_model = genai.GenerativeModel("gemini-1.5-flash")
-_embedder = SentenceTransformer("all-MiniLM-L6-v2")
+_model = genai.GenerativeModel("gemini-2.0-flash")
 
 SYSTEM_PROMPT = """You are Vikrant Honbute's portfolio assistant.
 Answer questions about his projects, skills, and experience using only the context provided.
 Be concise (2-4 sentences). Sound human and direct, not robotic or corporate.
 If the context does not contain the answer, say so honestly."""
+
 
 @dataclass(frozen=True)
 class RetrievedChunk:
@@ -30,8 +34,13 @@ class RetrievedChunk:
     preview: str
     text: str
 
+
 def query_namespace(namespace: str, question: str, top_k: int) -> tuple[str, list[RetrievedChunk]]:
-    query_embedding = _embedder.encode(question).tolist()
+    """Query a Pinecone namespace and generate an answer using RAG.
+
+    Returns a tuple of (answer_text, list_of_retrieved_chunks).
+    """
+    query_embedding = embed_query(question)
     matches = query_vectors(query_embedding, top_k, namespace)
 
     if not matches:

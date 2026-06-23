@@ -1,32 +1,51 @@
-from sentence_transformers import SentenceTransformer
-from rag.store import upsert_vectors, vector_exists
+"""Document ingestion logic — embeds and upserts documents into Pinecone."""
 
-_embedder = SentenceTransformer("all-MiniLM-L6-v2")
+from rag.embeddings import embed_texts
+from rag.store import upsert_documents, fetch_existing_ids
+
 
 def ingest_documents(namespace: str, documents: list[dict]) -> int:
-    vectors = []
+    """Ingest a list of documents into a Pinecone namespace.
+
+    Each document should be a dict with:
+        - "id" (optional): unique identifier
+        - "text": the document content
+        - "metadata" (optional): dict of metadata
+
+    Skips documents that already exist in the namespace.
+    Returns the number of newly ingested documents.
+    """
+    if not documents:
+        return 0
+
+    # Build list of (doc_id, doc) pairs
+    doc_pairs = []
     for doc in documents:
         doc_id = doc.get("id") or doc.get("metadata", {}).get("id", doc["text"][:40])
-        if vector_exists(doc_id, namespace):
-            continue
-        embedding = _embedder.encode(doc["text"]).tolist()
-        vectors.append({
-            "id": doc_id,
-            "values": embedding,
-            "metadata": {
-                **doc.get("metadata", {}),
-                "text": doc["text"],
-                "namespace": namespace
-            }
-        })
-    if vectors:
-        ids = [v["id"] for v in vectors]
-        embeddings = [v["values"] for v in vectors]
-        metadatas = [v["metadata"] for v in vectors]
-        documents_text = [v["metadata"].get("text", "") for v in vectors]
-        # Use upsert_documents to store vectors into the correct Pinecone namespace
-        from rag.store import upsert_documents
-        upsert_documents(namespace, ids, embeddings, metadatas, documents_text)
-    return len(vectors)
+        doc_pairs.append((doc_id, doc))
 
+    # Batch-check which IDs already exist (single Pinecone call)
+    all_ids = [pair[0] for pair in doc_pairs]
+    existing_ids = fetch_existing_ids(all_ids, namespace)
+
+    # Filter to only new documents
+    new_docs = [(doc_id, doc) for doc_id, doc in doc_pairs if doc_id not in existing_ids]
+
+    if not new_docs:
+        return 0
+
+    # Embed all new documents in one batch
+    texts = [doc["text"] for _, doc in new_docs]
+    embeddings = embed_texts(texts)
+
+    # Prepare upsert data
+    ids = [doc_id for doc_id, _ in new_docs]
+    metadatas = [doc.get("metadata", {}) for _, doc in new_docs]
+
+    upsert_documents(namespace, ids, embeddings, metadatas, texts)
+
+    return len(new_docs)
+
+
+# Alias for backward compatibility with route imports
 ingest_namespace_documents = ingest_documents
