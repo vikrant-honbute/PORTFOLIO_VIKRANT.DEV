@@ -53,3 +53,7 @@ Vikrant published a research paper at the IEEE International Conference on Emerg
 ## Contact
 
 To contact Vikrant, email him at vikranthonbute2004@gmail.com. His GitHub profile is github.com/vikrant-honbute where you can see his code and projects. His LinkedIn profile is linkedin.com/in/vikranthonbute. He responds quickly to opportunities and collaboration requests.
+
+## Hobby
+
+His hobbies are to play video games and cricket and football , also likes to listen to music and watch esports like pubg and cs2
