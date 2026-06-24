@@ -4,6 +4,7 @@ Handles index creation, upserting documents, querying, and existence checks.
 """
 
 import os
+# pyrefly: ignore [missing-import]
 from pinecone import Pinecone, ServerlessSpec
 
 from rag.embeddings import EMBEDDING_DIMENSION
