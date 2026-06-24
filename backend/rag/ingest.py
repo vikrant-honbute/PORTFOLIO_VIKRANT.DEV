@@ -4,7 +4,7 @@ from rag.embeddings import embed_texts
 from rag.store import upsert_documents, fetch_existing_ids
 
 
-def ingest_documents(namespace: str, documents: list[dict]) -> int:
+def ingest_documents(namespace: str, documents: list[dict], overwrite: bool = False) -> int:
     """Ingest a list of documents into a Pinecone namespace.
 
     Each document should be a dict with:
@@ -12,8 +12,8 @@ def ingest_documents(namespace: str, documents: list[dict]) -> int:
         - "text": the document content
         - "metadata" (optional): dict of metadata
 
-    Skips documents that already exist in the namespace.
-    Returns the number of newly ingested documents.
+    Skips documents that already exist in the namespace unless overwrite is True.
+    Returns the number of newly ingested or updated documents.
     """
     if not documents:
         return 0
@@ -24,12 +24,14 @@ def ingest_documents(namespace: str, documents: list[dict]) -> int:
         doc_id = doc.get("id") or doc.get("metadata", {}).get("id", doc["text"][:40])
         doc_pairs.append((doc_id, doc))
 
-    # Batch-check which IDs already exist (single Pinecone call)
-    all_ids = [pair[0] for pair in doc_pairs]
-    existing_ids = fetch_existing_ids(all_ids, namespace)
-
-    # Filter to only new documents
-    new_docs = [(doc_id, doc) for doc_id, doc in doc_pairs if doc_id not in existing_ids]
+    if not overwrite:
+        # Batch-check which IDs already exist (single Pinecone call)
+        all_ids = [pair[0] for pair in doc_pairs]
+        existing_ids = fetch_existing_ids(all_ids, namespace)
+        # Filter to only new documents
+        new_docs = [(doc_id, doc) for doc_id, doc in doc_pairs if doc_id not in existing_ids]
+    else:
+        new_docs = doc_pairs
 
     if not new_docs:
         return 0

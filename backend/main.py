@@ -16,11 +16,11 @@ from rag.ingest import ingest_documents
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Ingesting Vikrant knowledge base into Pinecone...")
-    documents = load_markdown_kb()
-    count = ingest_documents("portfolio-main", documents)
-    print(f"Ingested {count} new documents. Backend ready.")
-    yield
+     print("Ingesting Vikrant knowledge base into Pinecone...")
+     documents = load_markdown_kb()
+     count = ingest_documents("portfolio-main", documents, overwrite=True)
+     print(f"Ingested/Updated {count} documents. Backend ready.")
+     yield
 
 def create_app() -> FastAPI:
     app = FastAPI(
