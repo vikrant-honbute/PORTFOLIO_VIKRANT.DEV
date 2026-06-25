@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { profile } from "@/data/profile";
 import ResumePreviewModal from "@/components/ResumePreviewModal";
+import Image from "next/image";
+import iconImage from "@/app/icon.png";
 
 const navItems = [
     { label: "About", href: "#about" },
@@ -18,7 +20,8 @@ export default function Navbar() {
     return (
         <nav className="fixed left-0 top-0 z-50 w-full border-b border-white/[0.08] bg-white/[0.02] backdrop-blur-xl transition-colors duration-300">
             <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-12">
-                <a href="#home" className="font-mono-ui text-sm tracking-[0.08em] text-[var(--primary-accent)] sm:text-base">
+                <a href="#home" className="group flex items-center gap-3 font-mono-ui text-sm tracking-[0.08em] text-white transition hover:text-white/80 sm:text-base">
+                    <Image src={iconImage} alt="Icon" width={30} height={30} className="rounded-md object-cover transition duration-300 group-hover:scale-105" />
                     {profile.brand}
                 </a>
 
