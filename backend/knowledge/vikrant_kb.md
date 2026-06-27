@@ -1,6 +1,6 @@
 ## Profile
 
-Vikrant Honbute is a final year B.Tech AI & Data Science student at VIIT Pune (Vishwakarma Institute of Information Technology), Pune, Maharashtra, India. He is graduating in 2026 (Batch 2022-26) with a CGPA of 8.18. He works as an AI Engineer and GenAI Developer. He is actively looking for full-time AI Engineer roles in Pune or remote. His email is vikranthonbute2004@gmail.com, GitHub is github.com/vikrant-honbute, and LinkedIn is linkedin.com/in/vikranthonbute.
+Vikrant Honbute is a final year B.Tech AI & Data Science student at VIIT Pune (Vishwakarma Institute of Information Technology), Pune, Maharashtra, India. He is graduating in 2026 (Batch 2022-26) with a CGPA of 8.36. He works as an AI Engineer and GenAI Developer. He is actively looking for full-time AI Engineer roles in Pune or remote. His email is vikranthonbute2004@gmail.com, GitHub is github.com/vikrant-honbute, and LinkedIn is linkedin.com/in/vikranthonbute.
 
 ## Availability
 
@@ -8,7 +8,7 @@ Vikrant is currently open to work. He is actively looking for full-time AI Engin
 
 ## Education
 
-Vikrant studies at Vishwakarma Institute of Information Technology (VIIT) in Pune, Maharashtra, India. He is pursuing a Bachelor of Technology in Artificial Intelligence and Data Science. He is in the 2022-26 batch and will graduate in 2026. His current CGPA is 8.18.
+Vikrant studies at Vishwakarma Institute of Information Technology (VIIT) in Pune, Maharashtra, India. He is pursuing a Bachelor of Technology in Artificial Intelligence and Data Science. He is in the 2022-26 batch and will graduate in 2026. His current CGPA is 8.36.
 
 ## Skills — LLMs and GenAI
 

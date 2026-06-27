@@ -56,17 +56,62 @@ export default function AIChatWidget() {
 
   return (
     <>
+      <style>{`
+        @keyframes shimmer-slide {
+          0% { transform: translateX(-150%) skewX(-15deg); }
+          62.5%, 100% { transform: translateX(250%) skewX(-15deg); }
+        }
+        .animate-shimmer-slide {
+          animation: shimmer-slide 4s infinite ease-in-out;
+        }
+      `}</style>
       {/* ── Floating button ───────────────────────────────────── */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-1.5">
 
-        {/* Tooltip — only when closed */}
+        {/* Eye-catching AI Tooltip/Button */}
         {!open && (
-          <div className="flex items-center gap-2 rounded-full border border-[var(--line-border)] bg-[#0c0804]/90 px-4 py-2 backdrop-blur-sm">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--primary-accent)]" />
-            <p className="font-mono-ui text-[11px] text-[var(--foreground)]/70">
-              Ask Vikrant&apos;s AI
-            </p>
-          </div>
+          <button
+            onClick={() => setOpen(true)}
+            aria-label="Open AI assistant"
+            className="group relative flex items-center gap-2 rounded-full bg-gradient-to-r from-[#ff6a00] to-[#ff7a18] pl-1.5 pr-4 py-2 shadow-lg shadow-[rgba(255,106,0,0.3)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[rgba(255,106,0,0.4)]"
+          >
+            {/* Shimmer Effect Overlay */}
+            <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-full">
+              <div className="h-full w-1/2 animate-shimmer-slide bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            </div>
+
+            {/* White Circle with Provided Image */}
+            <div className="relative flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
+              <div className="relative h-[85%] w-[85%] overflow-hidden rounded-full">
+                <Image
+                  src={CHATBOT_ICON_SRC}
+                  alt="AI assistant icon"
+                  fill
+                  sizes="28px"
+                  className="object-cover"
+                />
+              </div>
+              {/* Sparkle */}
+              <svg 
+                className="absolute -right-1.5 -top-1.5 h-3.5 w-3.5 text-white drop-shadow-[0_0_3px_rgba(255,255,255,0.9)] animate-pulse" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+              >
+                <path d="M12 1C12 7 17 12 23 12C17 12 12 17 12 23C12 17 7 12 1 12C7 12 12 7 12 1Z" />
+              </svg>
+            </div>
+
+            {/* Text Content */}
+            <div className="flex flex-col items-start justify-center text-left">
+              <span className="text-[11.5px] font-bold leading-tight tracking-wide text-white">Ask Vikrant&apos;s AI</span>
+              <span className="text-[9px] font-medium text-white/90">Your smart assistant</span>
+            </div>
+
+            {/* Chevron */}
+            <svg className="ml-0.5 h-3.5 w-3.5 text-white transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         )}
 
         {/* Bot button */}

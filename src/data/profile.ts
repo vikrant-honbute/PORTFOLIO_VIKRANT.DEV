@@ -23,7 +23,7 @@ export const profile = {
   college: "VIIT Pune",
   degree: "B.Tech AI & Data Science",
   batch: "2022-26",
-  cgpa: "8.18",
+  cgpa: "8.36",
   contact: {
     email: "vikranthonbute2004@gmail.com",
     github: "https://github.com/vikrant-honbute",
@@ -43,13 +43,13 @@ export const profile = {
 };
 
 export const heroStats: Stat[] = [
-  { label: "CGPA", value: "8.18" },
+  { label: "CGPA", value: "8.36" },
   { label: "Internship", value: "1" },
   { label: "Projects", value: "15+" },
 ];
 
 export const aboutStats: Stat[] = [
-  { label: "CGPA", value: "8.18" },
+  { label: "CGPA", value: "8.36" },
   { label: "Institute", value: "VIIT Pune" },
   { label: "Batch", value: "2026" },
   { label: "Location", value: "Pune, India" },
