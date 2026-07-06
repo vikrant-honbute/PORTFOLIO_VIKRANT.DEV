@@ -150,6 +150,45 @@ export const projects: Project[] = [
             "Offline fallback mode",
         ],
     },
+    {
+        id: "aws-face-recognition",
+        code: "PRJ-04",
+        title: "Cloud-based Face Recognition System",
+        summary:
+            "Cloud-based Face Recognition System utilizing AWS Rekognition, S3, Lambda, and DynamoDB. This serverless architecture demonstrates face detection, secure image storage, and intelligent metadata management through automated processing pipelines.",
+        stack: [
+            "Python",
+            "Amazon Rekognition",
+            "Amazon S3",
+            "AWS Lambda",
+            "Amazon DynamoDB",
+        ],
+        href: "#projects",
+        status: "Prototype",
+        askAiNamespace: "project-aws-face-recognition",
+        metrics: [
+            { label: "Architecture", value: "Serverless" },
+            { label: "Engine", value: "Rekognition API" },
+            { label: "Storage", value: "S3 + DynamoDB" },
+        ],
+        watchDemoHref: "https://youtu.be/c0Eht1EgTg8",
+        githubHref: "https://github.com/vikrant-honbute",
+        contextPrompt:
+            "A comprehensive cloud-based face recognition system leveraging AWS services for detecting, recognizing, and storing facial data with secure metadata management. The system demonstrates modern serverless architecture patterns. Workflow: Image Upload to S3 -> Lambda Trigger -> Face Detection via Rekognition API -> Metadata and Face ID Storage in DynamoDB. Note: This is currently a design/architecture demonstration (testing has not been conducted yet).",
+        suggestions: [
+            "Explain the Lambda processing workflow when an image is uploaded.",
+            "What AWS services are used for storage and indexing?",
+            "What is the planned roadmap for this project?",
+        ],
+        defaultPrompt: "Explain the Lambda processing workflow when an image is uploaded.",
+        highlights: [
+            "Real-world cloud architecture using industry-standard AWS services",
+            "Demonstrates understanding of serverless computing patterns",
+            "Integration of multiple AWS services (multi-service orchestration)",
+            "Security-focused design with S3 access control and metadata separation",
+        ],
+    },
 ];
 
 export const featuredProject = projects[0];
+

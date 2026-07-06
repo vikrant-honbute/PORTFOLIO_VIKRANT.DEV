@@ -12,10 +12,12 @@ export default function ProjectsSection() {
           description="A focused selection of production-minded projects and case-study builds."
         />
 
-        <div className="mx-auto mt-8 grid max-w-[1400px] grid-cols-[repeat(auto-fit,minmax(290px,1fr))] gap-4">
+        <div className="mx-auto mt-10 grid max-w-[1400px] grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
           {projects.map((project) => (
-            <div key={project.id} className="w-full">
-              <ProjectCard project={project} />
+            <div key={project.id} className="w-full flex h-full">
+              <div className="w-full">
+                <ProjectCard project={project} />
+              </div>
             </div>
           ))}
         </div>
