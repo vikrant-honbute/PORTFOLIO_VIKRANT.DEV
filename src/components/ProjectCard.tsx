@@ -51,7 +51,7 @@ function ProjectPreview({ project }: { project: Project }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveMode("demo")}
-            className={`rounded-md px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] transition ${activeMode === "demo"
+            className={`rounded-md px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] transition ${activeMode === "demo"
                 ? "bg-[var(--primary-accent)] text-black"
                 : "text-[var(--text-muted)] hover:text-white"
               }`}
@@ -60,7 +60,7 @@ function ProjectPreview({ project }: { project: Project }) {
           </button>
           <button
             onClick={() => setActiveMode("snapshots")}
-            className={`rounded-md px-3 py-1 text-[11px] font-medium uppercase tracking-[0.12em] transition ${activeMode === "snapshots"
+            className={`rounded-md px-3 py-1 text-xs font-medium uppercase tracking-[0.12em] transition ${activeMode === "snapshots"
                 ? "bg-[var(--primary-accent)] text-black"
                 : "text-[var(--text-muted)] hover:text-white"
               }`}
@@ -69,7 +69,7 @@ function ProjectPreview({ project }: { project: Project }) {
           </button>
         </div>
 
-        <p className="font-mono-ui text-[9px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+        <p className="font-mono-ui text-[10px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
           {activeMode === "demo" ? "Demo preview" : "Image gallery"}
         </p>
       </div>
@@ -102,7 +102,7 @@ function ProjectPreview({ project }: { project: Project }) {
                         <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                       </svg>
                     </div>
-                    <p className="text-[11px] text-[var(--text-muted)]">Demo coming soon</p>
+                    <p className="text-xs text-[var(--text-muted)]">Demo coming soon</p>
                   </div>
                 )
               ) : (
@@ -112,7 +112,7 @@ function ProjectPreview({ project }: { project: Project }) {
                       <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                     </svg>
                   </div>
-                  <p className="text-[11px] text-[var(--text-muted)]">Demo coming soon</p>
+                  <p className="text-xs text-[var(--text-muted)]">Demo coming soon</p>
                 </div>
               )}
             </div>
@@ -161,7 +161,7 @@ function ProjectPreview({ project }: { project: Project }) {
             })}
           </div>
 
-          <div className="flex items-center justify-between px-1 text-[9px] text-[var(--text-muted)]">
+          <div className="flex items-center justify-between px-1 text-[10px] text-[var(--text-muted)]">
             <span>{snapshotItems.length} screenshots</span>
             <span>
               {activeSnapshotIndex + 1}/{snapshotItems.length}
@@ -175,7 +175,7 @@ function ProjectPreview({ project }: { project: Project }) {
               <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
             </svg>
           </div>
-          <p className="font-mono-ui text-[10px] tracking-[0.12em] text-[var(--text-muted)]">
+          <p className="font-mono-ui text-[11px] tracking-[0.12em] text-[var(--text-muted)]">
             Snapshots coming soon
           </p>
         </div>
@@ -239,7 +239,7 @@ function AskAIPanel({ project }: { project: Project }) {
       <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4">
         {messages.map((m, i) => (
           <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-            <p className={`max-w-[85%] rounded-lg px-3 py-2 text-[13px] leading-relaxed ${m.role === "user"
+            <p className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${m.role === "user"
                 ? "bg-[var(--primary-accent)] text-black font-medium"
                 : "border border-[var(--line-border)] bg-white/[0.04] text-[var(--foreground)]"
               }`}>
@@ -249,7 +249,7 @@ function AskAIPanel({ project }: { project: Project }) {
         ))}
         {loading && (
           <div className="flex justify-start">
-            <p className="rounded-lg border border-[var(--line-border)] bg-white/[0.04] px-3 py-2 text-[13px] text-[var(--text-muted)]">
+            <p className="rounded-lg border border-[var(--line-border)] bg-white/[0.04] px-3 py-2 text-sm text-[var(--text-muted)]">
               Thinking...
             </p>
           </div>
@@ -261,7 +261,7 @@ function AskAIPanel({ project }: { project: Project }) {
             <button
               key={s}
               onClick={() => send(s)}
-              className="rounded-md border border-[var(--line-border)] px-2.5 py-1 text-[11px] text-[var(--text-muted)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
+              className="rounded-md border border-[var(--line-border)] px-2.5 py-1 text-xs text-[var(--text-muted)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
             >
               {s}
             </button>
@@ -274,7 +274,7 @@ function AskAIPanel({ project }: { project: Project }) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send()}
           placeholder="Ask about this project..."
-          className="flex-1 rounded-md border border-[var(--line-border)] bg-black/40 px-3 py-2 text-[13px] text-white outline-none transition focus:border-[var(--primary-accent)] placeholder:text-white/25"
+          className="flex-1 rounded-md border border-[var(--line-border)] bg-black/40 px-3 py-2 text-sm text-white outline-none transition focus:border-[var(--primary-accent)] placeholder:text-white/25"
         />
         <button
           onClick={() => send()}
@@ -296,11 +296,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* ── Header ───────────────────────────────────────────────────── */}
       <header className="flex items-center justify-between border-b border-[var(--line-border)] bg-black/30 px-4 py-3">
         <div className="flex items-center gap-3">
-          <p className="font-mono-ui text-[10px] uppercase tracking-[0.12em] text-[var(--primary-accent)]">
+          <p className="font-mono-ui text-[11px] uppercase tracking-[0.12em] text-[var(--primary-accent)]">
             {project.code}
           </p>
           <span
-            className={`flex items-center gap-1 rounded-full border px-2 py-0.5 text-[9px] font-medium ${STATUS_STYLES[project.status]}`}
+            className={`flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium ${STATUS_STYLES[project.status]}`}
           >
             <span className={`h-1.5 w-1.5 rounded-full ${STATUS_DOT[project.status]}`} />
             {project.status}
@@ -311,7 +311,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           href={project.githubHref}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center gap-1.5 rounded-md border border-[var(--line-border)] px-2.5 py-1 font-mono-ui text-[10px] uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
+          className="flex items-center gap-1.5 rounded-md border border-[var(--line-border)] px-2.5 py-1 font-mono-ui text-[11px] uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
           aria-label={`Open ${project.title} on GitHub`}
         >
           <svg className="h-3 w-3" viewBox="0 0 24 24" fill="currentColor">
@@ -325,17 +325,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* ── Body ─────────────────────────────────────────────────────── */}
       <div className="px-4 pb-4 pt-3 flex flex-col flex-1">
-        <h3 className="text-[17px] font-bold leading-tight text-white">{project.title}</h3>
-        <p className="mt-1.5 text-[12px] leading-relaxed text-[var(--text-muted)]">
+        <h3 className="text-lg font-bold leading-tight text-white">{project.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
           {project.summary}
         </p>
 
         {/* Stack */}
-        <ul className="mt-3 flex flex-wrap gap-1.5">
+        <ul className="mt-4 flex flex-wrap gap-1.5">
           {project.stack.map((tech) => (
             <li
               key={tech}
-              className="rounded-md border border-[var(--line-border)] bg-black/20 px-2 py-0.5 font-mono-ui text-[10px] text-[var(--foreground)]"
+              className="rounded-md border border-[var(--line-border)] bg-black/20 px-2 py-1 font-mono-ui text-[11px] text-[var(--foreground)]"
             >
               {tech}
             </li>
@@ -343,27 +343,27 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </ul>
 
         {/* Metrics */}
-        <dl className="mt-3 grid grid-cols-3 gap-1.5">
+        <dl className="mt-4 grid grid-cols-3 gap-2">
           {project.metrics.map((metric) => (
             <div
               key={metric.label}
-              className="rounded-lg border border-[var(--line-border)] bg-black/20 px-2.5 py-2"
+              className="rounded-lg border border-[var(--line-border)] bg-black/20 px-2.5 py-2.5"
             >
-              <dt className="font-mono-ui text-[9px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+              <dt className="font-mono-ui text-[10px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
                 {metric.label}
               </dt>
-              <dd className="mt-0.5 text-[12px] font-semibold text-white">{metric.value}</dd>
+              <dd className="mt-1 text-sm font-semibold text-white">{metric.value}</dd>
             </div>
           ))}
         </dl>
 
         {/* Actions */}
-        <div className="mt-auto pt-4 flex flex-wrap gap-2">
+        <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
           <a
             href={project.watchDemoHref}
-            className="inline-flex items-center gap-1.5 rounded-md bg-[var(--primary-accent)] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-black transition hover:brightness-110"
+            className="inline-flex items-center gap-1.5 rounded-md bg-[var(--primary-accent)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-black transition hover:brightness-110"
           >
-            <svg className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+            <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
               <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
             </svg>
             Demo
@@ -372,15 +372,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             href={project.githubHref}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-[var(--line-border)] px-3 py-1.5 text-[11px] uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
+            className="inline-flex items-center gap-1.5 rounded-md border border-[var(--line-border)] px-3 py-1.5 text-xs uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
           >
             View Code
           </a>
           <button
             onClick={() => setAiOpen(true)}
-            className="inline-flex items-center gap-1.5 rounded-md border border-[var(--line-border)] px-3 py-1.5 text-[11px] uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
+            className="inline-flex items-center gap-1.5 rounded-md border border-[var(--line-border)] px-3 py-1.5 text-xs uppercase tracking-[0.1em] text-[var(--foreground)] transition hover:border-[var(--primary-accent)] hover:text-[var(--primary-accent)]"
           >
-            <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
             </svg>
             Ask AI
@@ -394,11 +394,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <div className="flex h-[560px] w-[480px] flex-col overflow-hidden rounded-xl border border-[var(--line-border)] bg-[#0c0804] shadow-2xl" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between border-b border-[var(--line-border)] bg-black/40 px-4 py-3">
                 <div>
-                  <p className="font-mono-ui text-[10px] uppercase tracking-[0.14em] text-[var(--primary-accent)]">Ask AI about</p>
-                  <p className="text-sm font-semibold text-white">{project.title}</p>
+                  <p className="font-mono-ui text-[11px] uppercase tracking-[0.14em] text-[var(--primary-accent)]">Ask AI about</p>
+                  <p className="text-base font-semibold text-white">{project.title}</p>
                 </div>
                 <button onClick={() => setAiOpen(false)} className="rounded-md p-1 text-white/40 transition hover:text-white">
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
                 </button>
               </div>
               <AskAIPanel project={project} />
