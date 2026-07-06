@@ -172,7 +172,20 @@ export const projects: Project[] = [
             { label: "Storage", value: "S3 + DynamoDB" },
         ],
         watchDemoHref: "https://youtu.be/c0Eht1EgTg8",
-        githubHref: "https://github.com/vikrant-honbute",
+        githubHref: "https://github.com/vikrant-honbute/Cloud-based-Face-Recognition-System-Using-AWS",
+        media: [
+            {
+                title: "System Flowchart",
+                description: "End-to-end pipeline: S3 upload → Lambda trigger → Rekognition analysis → DynamoDB storage.",
+                items: [
+                    {
+                        type: "image",
+                        src: "https://raw.githubusercontent.com/vikrant-honbute/Cloud-based-Face-Recognition-System-Using-AWS/main/FLOWCHART.png",
+                        alt: "AWS Face Recognition System Flowchart",
+                    },
+                ],
+            },
+        ],
         contextPrompt:
             "A comprehensive cloud-based face recognition system leveraging AWS services for detecting, recognizing, and storing facial data with secure metadata management. The system demonstrates modern serverless architecture patterns. Workflow: Image Upload to S3 -> Lambda Trigger -> Face Detection via Rekognition API -> Metadata and Face ID Storage in DynamoDB. Note: This is currently a design/architecture demonstration (testing has not been conducted yet).",
         suggestions: [

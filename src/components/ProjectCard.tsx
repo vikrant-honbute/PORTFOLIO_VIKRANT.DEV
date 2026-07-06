@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Project } from "@/data/projects";
 import Portal from "@/components/Portal";
 
@@ -21,10 +21,107 @@ function getYouTubeId(url: string): string {
 
 type PreviewMode = "demo" | "snapshots";
 
+type SnapshotItem = { src: string; alt?: string; sectionTitle: string };
+
+function SnapshotLightbox({
+  items,
+  startIndex,
+  onClose,
+}: {
+  items: SnapshotItem[];
+  startIndex: number;
+  onClose: () => void;
+}) {
+  const [index, setIndex] = useState(startIndex);
+  const total = items.length;
+  const item = items[index];
+
+  const prev = useCallback(() => setIndex((i) => (i - 1 + total) % total), [total]);
+  const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose, prev, next]);
+
+  return (
+    <Portal>
+      <div
+        className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 backdrop-blur-sm"
+        onClick={onClose}
+      >
+        {/* Close */}
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+          aria-label="Close"
+        >
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
+        </button>
+
+        {/* Counter */}
+        {total > 1 && (
+          <p className="absolute right-16 top-4 font-mono-ui text-xs text-white/50">
+            {index + 1} / {total}
+          </p>
+        )}
+
+        {/* Prev arrow */}
+        {total > 1 && (
+          <button
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-[var(--primary-accent)] hover:text-black"
+            aria-label="Previous image"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" /></svg>
+          </button>
+        )}
+
+        {/* Image */}
+        <div
+          className="relative mx-16 max-h-[90vh] max-w-[90vw] overflow-hidden rounded-xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Image
+            src={item.src}
+            alt={item.alt ?? `Snapshot ${index + 1}`}
+            width={1920}
+            height={1080}
+            unoptimized
+            className="max-h-[90vh] w-auto object-contain"
+          />
+          {item.sectionTitle && (
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-4 py-3">
+              <p className="font-mono-ui text-xs uppercase tracking-[0.12em] text-white/80">{item.sectionTitle}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Next arrow */}
+        {total > 1 && (
+          <button
+            onClick={(e) => { e.stopPropagation(); next(); }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-[var(--primary-accent)] hover:text-black"
+            aria-label="Next image"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
+          </button>
+        )}
+      </div>
+    </Portal>
+  );
+}
+
 function ProjectPreview({ project }: { project: Project }) {
   const mediaSections = project.media ?? [];
   const [activeMode, setActiveMode] = useState<PreviewMode>("demo");
   const [activeSnapshotIndex, setActiveSnapshotIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const demoSections = mediaSections.filter((section) =>
     section.items.some((item) => item.type === "video")
   );
@@ -120,14 +217,49 @@ function ProjectPreview({ project }: { project: Project }) {
         </div>
       ) : hasSnapshots && activeSnapshot ? (
         <div className="flex flex-col gap-2 p-2">
-          <div className="relative overflow-hidden rounded-md border border-[var(--line-border)] bg-black/30">
+          {/* Main image with prev/next + expand */}
+          <div className="group relative overflow-hidden rounded-md border border-[var(--line-border)] bg-black/30">
             <Image
               src={activeSnapshot.src}
               alt={activeSnapshot.alt ?? `${project.title} snapshot ${activeSnapshotIndex + 1}`}
               width={1280}
               height={720}
-              className="aspect-video h-full max-h-[190px] w-full object-cover"
+              unoptimized
+              className="aspect-video h-full max-h-[190px] w-full cursor-pointer object-cover transition duration-200 group-hover:brightness-75"
+              onClick={() => setLightboxIndex(activeSnapshotIndex)}
             />
+
+            {/* Expand button */}
+            <button
+              onClick={() => setLightboxIndex(activeSnapshotIndex)}
+              className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-black/60 text-white opacity-0 transition group-hover:opacity-100 hover:bg-[var(--primary-accent)] hover:text-black"
+              aria-label="View fullscreen"
+            >
+              <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+              </svg>
+            </button>
+
+            {/* Prev / Next arrows on card */}
+            {snapshotItems.length > 1 && (
+              <>
+                <button
+                  onClick={() => setActiveSnapshotIndex((i) => (i - 1 + snapshotItems.length) % snapshotItems.length)}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-md bg-black/60 text-white opacity-0 transition group-hover:opacity-100 hover:bg-[var(--primary-accent)] hover:text-black"
+                  aria-label="Previous"
+                >
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" /></svg>
+                </button>
+                <button
+                  onClick={() => setActiveSnapshotIndex((i) => (i + 1) % snapshotItems.length)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-md bg-black/60 text-white opacity-0 transition group-hover:opacity-100 hover:bg-[var(--primary-accent)] hover:text-black"
+                  aria-label="Next"
+                >
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
+                </button>
+              </>
+            )}
+
             <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-2">
               <p className="font-mono-ui text-[9px] uppercase tracking-[0.14em] text-white/80">
                 {activeSnapshot.sectionTitle}
@@ -135,38 +267,48 @@ function ProjectPreview({ project }: { project: Project }) {
             </div>
           </div>
 
-          <div className="flex gap-1.5 overflow-x-auto pb-1 pr-1 [scrollbar-width:thin]">
-            {snapshotItems.map((item, index) => {
-              const isActive = index === activeSnapshotIndex;
-
-              return (
-                <button
-                  key={`${item.src}-${index}`}
-                  type="button"
-                  onClick={() => setActiveSnapshotIndex(index)}
-                  className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md border transition ${isActive
-                      ? "border-[var(--primary-accent)] ring-1 ring-[var(--primary-accent)]"
-                      : "border-[var(--line-border)] opacity-70 hover:opacity-100"
-                    }`}
-                >
-                  <Image
-                    src={item.src}
-                    alt={item.alt ?? `${project.title} snapshot ${index + 1}`}
-                    width={320}
-                    height={180}
-                    className="h-full w-full object-cover"
-                  />
-                </button>
-              );
-            })}
-          </div>
+          {/* Thumbnail strip */}
+          {snapshotItems.length > 1 && (
+            <div className="flex gap-1.5 overflow-x-auto pb-1 pr-1 [scrollbar-width:thin]">
+              {snapshotItems.map((item, index) => {
+                const isActive = index === activeSnapshotIndex;
+                return (
+                  <button
+                    key={`${item.src}-${index}`}
+                    type="button"
+                    onClick={() => setActiveSnapshotIndex(index)}
+                    className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md border transition ${isActive
+                        ? "border-[var(--primary-accent)] ring-1 ring-[var(--primary-accent)]"
+                        : "border-[var(--line-border)] opacity-70 hover:opacity-100"
+                      }`}
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt ?? `${project.title} snapshot ${index + 1}`}
+                      width={320}
+                      height={180}
+                      unoptimized
+                      className="h-full w-full object-cover"
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           <div className="flex items-center justify-between px-1 text-[10px] text-[var(--text-muted)]">
-            <span>{snapshotItems.length} screenshots</span>
-            <span>
-              {activeSnapshotIndex + 1}/{snapshotItems.length}
-            </span>
+            <span>{snapshotItems.length} screenshot{snapshotItems.length !== 1 ? "s" : ""}</span>
+            <span>{activeSnapshotIndex + 1}/{snapshotItems.length}</span>
           </div>
+
+          {/* Lightbox */}
+          {lightboxIndex !== null && (
+            <SnapshotLightbox
+              items={snapshotItems}
+              startIndex={lightboxIndex}
+              onClose={() => setLightboxIndex(null)}
+            />
+          )}
         </div>
       ) : (
         <div className="flex min-h-[180px] flex-col items-center justify-center gap-2 px-3 py-4 text-center">
