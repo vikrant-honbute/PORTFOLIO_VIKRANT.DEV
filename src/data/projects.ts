@@ -99,7 +99,7 @@ export const projects: Project[] = [
             { label: "Flow", value: "Automated" },
             { label: "Scale", value: "Cloud-ready" },
         ],
-        watchDemoHref: "#",
+        watchDemoHref: "https://youtu.be/WCsqSPjhqcI",
         githubHref: "https://github.com/vikrant-honbute",
         contextPrompt:
             "This project automates short video creation with LLM script generation, TTS narration, rendering pipelines, and AI-powered titles.",
