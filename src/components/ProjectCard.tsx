@@ -548,6 +548,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
           <a
             href={project.watchDemoHref}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-1.5 rounded-md bg-[var(--primary-accent)] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-black transition hover:brightness-110"
           >
             <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
