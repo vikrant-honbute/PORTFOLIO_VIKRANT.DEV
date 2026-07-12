@@ -128,7 +128,7 @@ export const projects: Project[] = [
             { label: "KNOWLEDGE", value: "FAISS + RAG" },
             { label: "SECURITY", value: "Risk Scoring" },
         ],
-        watchDemoHref: "#",
+        watchDemoHref: "https://youtu.be/lLFoQv37eZo",
         githubHref: "https://github.com/vikrant-honbute",
         contextPrompt:
             "CodeGuardian is an AI-powered security analysis platform that combines static code analysis, RAG, and LLM reasoning to detect vulnerabilities, explain security risks, suggest fixes, and generate risk-scored reports. Key highlights: Multi-language vulnerability detection, AST-based static analysis, hardcoded secret detection, SQL injection detection, LLM-powered explanations, OWASP + CWE grounded reasoning, risk scoring engine, structured security reports, and offline fallback mode.",
