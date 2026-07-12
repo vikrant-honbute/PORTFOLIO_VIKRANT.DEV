@@ -117,6 +117,69 @@ function SnapshotLightbox({
   );
 }
 
+function YouTubeThumbnail({
+  videoId,
+  title,
+}: {
+  videoId: string;
+  title: string;
+}) {
+  const [playing, setPlaying] = useState(false);
+
+  if (playing) {
+    return (
+      <iframe
+        src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`}
+        title={`${title} demo`}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="h-full w-full"
+      />
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      className="group/play relative h-full w-full cursor-pointer"
+      aria-label={`Play ${title} demo`}
+    >
+      {/* YouTube maxresdefault thumbnail — clean, no branding */}
+      <Image
+        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        alt={`${title} thumbnail`}
+        fill
+        unoptimized
+        className="object-cover transition duration-300 group-hover/play:brightness-75 group-hover/play:scale-105"
+      />
+
+      {/* Gradient overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+
+      {/* Centered play button */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-black/50 backdrop-blur-sm transition-all duration-300 group-hover/play:scale-110 group-hover/play:border-[var(--primary-accent)] group-hover/play:bg-[var(--primary-accent)]/90">
+          <svg
+            className="ml-1 h-6 w-6 text-white transition-colors duration-300 group-hover/play:text-black"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Bottom label */}
+      <div className="absolute inset-x-0 bottom-0 px-3 py-2">
+        <p className="font-mono-ui text-[9px] uppercase tracking-[0.14em] text-white/70">
+          Click to play demo
+        </p>
+      </div>
+    </button>
+  );
+}
+
 function ProjectPreview({ project }: { project: Project }) {
   const mediaSections = project.media ?? [];
   const [activeMode, setActiveMode] = useState<PreviewMode>("demo");
@@ -141,6 +204,13 @@ function ProjectPreview({ project }: { project: Project }) {
   const hasDemo = Boolean(demoHref) || demoSections.length > 0;
   const hasSnapshots = snapshotItems.length > 0;
   const activeSnapshot = snapshotItems[Math.min(activeSnapshotIndex, Math.max(snapshotItems.length - 1, 0))];
+
+  // Resolve the YouTube video ID for the demo
+  const demoVideoId = demoHref
+    ? getYouTubeId(demoHref)
+    : demoSections[0]?.items[0]?.type === "video"
+      ? getYouTubeId(demoSections[0].items[0].src)
+      : "";
 
   return (
     <div className="relative mx-3 mt-3 overflow-hidden rounded-lg border border-[var(--line-border)] bg-[#080402]">
@@ -175,33 +245,8 @@ function ProjectPreview({ project }: { project: Project }) {
         <div className="flex flex-col items-center justify-center gap-2 px-2 py-3 text-center">
           <div className="w-full max-w-[380px]">
             <div className="aspect-video w-full rounded-md border border-[var(--line-border)] overflow-hidden bg-black/40 flex items-center justify-center">
-              {hasDemo ? (
-                demoHref ? (
-                  <iframe
-                    src={`https://www.youtube.com/embed/${getYouTubeId(demoHref)}?rel=0&modestbranding=1`}
-                    title={`${project.title} demo`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="h-full w-full"
-                  />
-                ) : demoSections[0]?.items[0]?.type === "video" ? (
-                  <iframe
-                    src={`https://www.youtube.com/embed/${getYouTubeId(demoSections[0].items[0].src)}?rel=0&modestbranding=1`}
-                    title={`${project.title} demo`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="h-full w-full"
-                  />
-                ) : (
-                  <div className="flex flex-col items-center justify-center gap-3 px-4">
-                    <div className="h-12 w-12 rounded-full bg-[rgba(255,106,0,0.12)] flex items-center justify-center">
-                      <svg className="h-5 w-5 text-[var(--primary-accent)]" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                      </svg>
-                    </div>
-                    <p className="text-xs text-[var(--text-muted)]">Demo coming soon</p>
-                  </div>
-                )
+              {hasDemo && demoVideoId ? (
+                <YouTubeThumbnail videoId={demoVideoId} title={project.title} />
               ) : (
                 <div className="flex flex-col items-center justify-center gap-3 px-4">
                   <div className="h-12 w-12 rounded-full bg-[rgba(255,106,0,0.12)] flex items-center justify-center">
