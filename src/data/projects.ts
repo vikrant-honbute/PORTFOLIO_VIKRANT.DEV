@@ -201,6 +201,93 @@ export const projects: Project[] = [
             "Security-focused design with S3 access control and metadata separation",
         ],
     },
+    {
+        id: "agentic-etl-self-healing-pipeline",
+        code: "PRJ-05",
+        title: "Agentic ETL Self-Healing Data Pipeline",
+        summary:
+            "End-to-end Agentic ETL pipeline orchestrated by Apache Airflow that autonomously ingests Yelp reviews, diagnoses & heals data quality issues, and performs AI-powered sentiment analysis using Ollama (llama3.2:3b). 100% Docker containerized with 12% auto-repair rate on real-world data.",
+        stack: [
+            "Python",
+            "Apache Airflow",
+            "Ollama (llama3.2:3b)",
+            "PostgreSQL",
+            "Docker",
+            "Docker Compose",
+        ],
+        href: "#projects",
+        status: "Live",
+        askAiNamespace: "project-agentic-etl-self-healing-pipeline",
+        metrics: [
+            { label: "Success Rate", value: "88%" },
+            { label: "Heal Rate", value: "12%" },
+            { label: "Model Confidence", value: "91.5%" },
+        ],
+        watchDemoHref: "https://youtu.be/tm-EomhQw2c",
+        githubHref: "https://github.com/vikrant-honbute/AgenticAI_ETL_SELF_HEALING_DATA_PIPELINE",
+        contextPrompt:
+            "This is an Agentic ETL Self-Healing Data Pipeline orchestrated by Apache Airflow. It autonomously ingests Yelp reviews, diagnoses and heals 5 types of data quality issues (missing_text, empty_text, wrong_type, special_characters_only, too_long), and performs AI-powered sentiment analysis using a local Ollama llama3.2:3b model. 100% Docker containerized with PostgreSQL metadata store. Key stats: 88% clean records, 12% auto-repaired records, 0% degradation, 91.5% average model confidence. The pipeline has 6 Airflow tasks: load_model → load_reviews → diagnose_and_heal_batch → batch_analyze_sentiment → aggregate_results → generate_health_report. Every healed record includes full traceability (was_healed, error_type, action_taken). Output includes per-run sentiment analysis summaries and health reports (HEALTHY/WARNING/DEGRADED/CRITICAL). Uses Yelp Academic Dataset. Local LLM inference means zero cloud costs.",
+        suggestions: [
+            "How does the self-healing mechanism work?",
+            "Walk me through the 6 Airflow pipeline tasks.",
+            "How is the local LLM integrated for sentiment analysis?",
+        ],
+        defaultPrompt: "How does the self-healing mechanism work?",
+        highlights: [
+            "Autonomous data quality detection & repair (5 issue types)",
+            "12% auto-repair rate on real-world Yelp data",
+            "91.5% average LLM model confidence",
+            "Full healing traceability per record",
+            "6-task Apache Airflow DAG orchestration",
+            "Local Ollama inference — zero cloud LLM costs",
+            "100% Docker containerized stack",
+            "Pipeline health reporting (HEALTHY/WARNING/DEGRADED/CRITICAL)",
+        ],
+    },
+    {
+        id: "flights-operations-data-pipeline",
+        code: "PRJ-06",
+        title: "Flights Operations — Data Engineering Pipeline",
+        summary:
+            "Production-oriented data engineering pipeline that ingests live global flight data from OpenSky Network, processes it through a bronze → silver → gold medallion architecture, and loads aggregated results to Snowflake. Orchestrated with Apache Airflow on Docker Compose.",
+        stack: [
+            "Python",
+            "Apache Airflow",
+            "Snowflake",
+            "PostgreSQL",
+            "Docker",
+            "pandas",
+            "OpenSky API",
+        ],
+        href: "#projects",
+        status: "Live",
+        askAiNamespace: "project-flights-operations-data-pipeline",
+        metrics: [
+            { label: "Architecture", value: "Medallion" },
+            { label: "Schedule", value: "Every 30 min" },
+            { label: "Scale", value: "6,000+ Flights" },
+        ],
+        watchDemoHref: "https://youtu.be/Qa3yX67Y388",
+        githubHref: "https://github.com/vikrant-honbute/Flights_Operations_Data_Eng_Project",
+        contextPrompt:
+            "This is a Flights Operations Data Engineering Pipeline using a medallion architecture (Bronze → Silver → Gold). It ingests live global flight state data from the OpenSky Network REST API every 30 minutes via Apache Airflow. Bronze layer stores raw JSON snapshots (~1-2MB per run). Silver layer normalizes 17 API columns into 4 key fields (icao24, origin_country, velocity, geo_altitude) and exports CSV. Gold layer aggregates by origin_country to compute total_flights, avg_velocity, and avg_geo_altitude per country (~150-200 countries). An optional Snowflake loader performs UPSERT (MERGE) into a FLIGHT_KPIS table keyed on WINDOW_START + ORIGIN_COUNTRY. The Airflow DAG (flight_ops_medallion_pipeline) uses PythonOperators with XCom for inter-task file path passing, 30-min schedule, and 1 retry with 5-min delay. 100% Docker Compose containerized with PostgreSQL 15 as Airflow metadata store. Processes 6,000+ concurrent global flights per run.",
+        suggestions: [
+            "Explain the medallion architecture and each layer's role.",
+            "How does the Snowflake UPSERT (MERGE) pattern work?",
+            "How is XCom used for inter-task communication in the DAG?",
+        ],
+        defaultPrompt: "Explain the medallion architecture and each layer's role.",
+        highlights: [
+            "Industry-standard bronze → silver → gold medallion architecture",
+            "Live data ingestion from OpenSky Network API (global flight states)",
+            "Processes 6,000+ concurrent flights per pipeline run",
+            "30-minute automated scheduling with Airflow orchestration",
+            "Snowflake UPSERT (MERGE) for cloud analytics warehouse load",
+            "XCom-based inter-task file path propagation",
+            "100% Docker Compose containerized environment",
+            "Parameterized SQL queries for safe Snowflake writes",
+        ],
+    },
 ];
 
 export const featuredProject = projects[0];
