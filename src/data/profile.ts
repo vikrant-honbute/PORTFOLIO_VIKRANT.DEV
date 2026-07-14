@@ -7,7 +7,7 @@ export const profile = {
   name: "Vikrant Honbute",
   brand: "VIKRANT.DEV",
   terminalLine: "> vikrant@ai:~$ initializing portfolio",
-  roleLine: "AI Engineer · GenAI Developer · ML Engineer · LLM Systems",
+  roleLine: "AI ENGINEER - DATA ENGINEER - PYTHON DEVELOPER",
   headingPrimary: "I build AI",
   headingAccent: "that actually works.",
   resumePreviewUrl:
@@ -15,9 +15,9 @@ export const profile = {
   resumeDownloadUrl:
     "https://drive.google.com/uc?export=download&id=1PwNDfDqg3x2SPq5YxKDY51_rwaXGoEJv",
   shortBio:
-    "Entry-level AI Engineer with hands-on experience in Generative AI, AI Agents, and RAG systems.",
+    "Entry-level Data & AI Engineer actively looking for full-time roles in the Pune tech ecosystem.",
   longBio:
-    "Building LLM-powered apps with LangChain, LangGraph, and CrewAI. Final year student at VIIT Pune, actively looking for full-time AI Engineer roles.",
+    "I build end-to-end data solutions, from robust data pipelines and analytics to LLM-powered AI agents. Experienced in Python, Data Engineering, and integrating Generative AI into practical applications.",
   location: "Pune, India",
   availability: "Open to Work",
   college: "VIIT Pune",

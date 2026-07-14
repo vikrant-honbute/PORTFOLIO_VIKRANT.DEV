@@ -5,7 +5,7 @@ import { profile, heroStats } from "@/data/profile";
 
 // ── Name typing animation ────────────────────────────────────────────────────
 const FULL_NAME = "Vikrant Honbute";
-const ROLE_LINE = "AI Engineer · GenAI Developer · ML Engineer";
+const ROLE_LINE = "AI ENGINEER - DATA ENGINEER - PYTHON DEVELOPER";
 
 function NameTypingBlock() {
   const [nameChars, setNameChars] = useState(0);
@@ -44,18 +44,16 @@ function NameTypingBlock() {
             {FULL_NAME.slice(0, nameChars)}
           </span>
           <span
-            className={`inline-block w-[3px] h-[1.1em] translate-y-[0.1em] ml-1 bg-[var(--primary-accent)] transition-opacity ${
-              cursorBlink ? "opacity-100" : "opacity-20"
-            }`}
+            className={`inline-block w-[3px] h-[1.1em] translate-y-[0.1em] ml-1 bg-[var(--primary-accent)] transition-opacity ${cursorBlink ? "opacity-100" : "opacity-20"
+              }`}
           />
         </h2>
       </div>
 
       {/* Role — fades in after name is done */}
       <p
-        className={`mt-3 font-mono-ui text-[13px] text-[var(--primary-accent)] tracking-[0.12em] transition-all duration-700 ${
-          showRole ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-        }`}
+        className={`mt-3 font-mono-ui text-[13px] text-[var(--primary-accent)] tracking-[0.12em] transition-all duration-700 ${showRole ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+          }`}
       >
         {ROLE_LINE}
       </p>
@@ -101,7 +99,7 @@ export default function HeroSection() {
           const y = r * 28 + 14;
           const dist = Math.sqrt(
             Math.pow((x - canvas.width / 2) / canvas.width, 2) +
-              Math.pow((y - canvas.height / 2) / canvas.height, 2)
+            Math.pow((y - canvas.height / 2) / canvas.height, 2)
           );
           const wave = Math.sin(t * 0.8 + dist * 12) * 0.5 + 0.5;
           const alpha = 0.04 + wave * 0.18;
@@ -128,7 +126,7 @@ export default function HeroSection() {
         {/* ── Left — Copy ─────────────────────────────────────────────── */}
         <div className="flex flex-col justify-center">
           <p className="font-mono-ui text-[11px] uppercase tracking-[0.22em] text-[var(--primary-accent)]/70 mb-6">
-            &gt; AI Engineer · GenAI Developer · ML Engineer · LLM Systems
+            &gt; {profile.roleLine}
           </p>
 
           {/* Headline */}
