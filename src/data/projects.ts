@@ -59,7 +59,7 @@ export const projects: Project[] = [
             { label: "Search", value: "FAISS + Pinecone" },
             { label: "Mode", value: "End-to-End" },
         ],
-        watchDemoHref: "#",
+        watchDemoHref: "https://youtu.be/_-Y5UIQ6Tzg",
         githubHref: "https://github.com/vikrant-honbute",
         media: [
             {
