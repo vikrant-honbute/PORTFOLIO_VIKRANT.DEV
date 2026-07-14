@@ -9,7 +9,7 @@ export const profile = {
   terminalLine: "> vikrant@ai:~$ initializing portfolio",
   roleLine: "AI ENGINEER - DATA ENGINEER - PYTHON DEVELOPER",
   headingPrimary: "I build",
-  headingAccent: "AI & Data Solutions that actually works.",
+  headingAccent: "AI & Data Solutions that actually works....",
   resumePreviewUrl:
     "https://drive.google.com/file/d/1PwNDfDqg3x2SPq5YxKDY51_rwaXGoEJv/preview",
   resumeDownloadUrl:
