@@ -8,8 +8,8 @@ export const profile = {
   brand: "VIKRANT.DEV",
   terminalLine: "> vikrant@ai:~$ initializing portfolio",
   roleLine: "AI ENGINEER - DATA ENGINEER - PYTHON DEVELOPER",
-  headingPrimary: "I build AI",
-  headingAccent: "that actually works.",
+  headingPrimary: "I build",
+  headingAccent: "AI & Data Solutions that actually works.",
   resumePreviewUrl:
     "https://drive.google.com/file/d/1PwNDfDqg3x2SPq5YxKDY51_rwaXGoEJv/preview",
   resumeDownloadUrl:

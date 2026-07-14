@@ -34,7 +34,7 @@ function NameTypingBlock() {
     <div className="flex flex-col items-center justify-center px-6 py-10 text-center">
       {/* Eyebrow */}
       <p className="font-mono-ui text-[10px] uppercase tracking-[0.22em] text-[var(--primary-accent)]/70">
-        &gt; initializing_
+        &gt; BUILDING_INTELLIGENT_SYSTEMS_
       </p>
 
       {/* Name */}
