@@ -46,6 +46,49 @@ The AI Recruitment Agent is one of Vikrant's main projects. It is an end-to-end 
 
 Quick Clip is Vikrant's AI Short Video Generator project. It is a scalable automated pipeline for generating short videos end-to-end using AI. The system takes a topic as input, uses an LLM to write a script, converts the script to speech using Google TTS, generates video visuals using Replicate API models, and combines everything into a final short video. It also uses Gemini 2.5 Flash for semantic video titling and description generation. Built with Next.js, Neon DB, Firebase, Gemini 2.5 Flash, Replicate API, Google TTS, Docker, and GitHub Actions. The project is currently being built.
 
+## Project — CodeGuardian AI DevSecOps Agent
+
+CodeGuardian is an autonomous, agentic AI DevSecOps platform built by Vikrant Honbute. It scans multi-language codebases for security vulnerabilities, provides plain-English explanations using LLMs, retrieves contextual security rules via RAG, and automatically generates secure code fixes.
+
+Executive Summary:
+- Project Name: CodeGuardian (The Autonomous AI DevSecOps Agent)
+- Elevator Pitch: CodeGuardian is an autonomous, agentic AI DevSecOps platform that scans multi-language codebases for security vulnerabilities, provides plain-English explanations using LLMs, retrieves contextual security rules via RAG, and automatically generates secure code fixes.
+- Primary Goal: Make secure software development autonomous by bridging the gap between static analysis tools (linters/SAST) and human security reviewers.
+- Key Differentiator: Combines AST-based static code analysis with NVIDIA NIM LLM reasoning, a RAG security knowledge base (OWASP/CWE), and an offline deterministic fallback engine for zero-downtime reliability.
+
+Technical Stack & Tools:
+- Backend Framework: Python 3.11+, FastAPI, Uvicorn, Pydantic
+- AI Reasoning Models: NVIDIA NIM Microservices (llama-3-1-nemotron-nano-8B-v1), AWS SageMaker Endpoints
+- Embedding & RAG: NVIDIA NIM Retrieval Embedding (retrieval-embedding-nim), FAISS / Local Vector Store
+- Multi-Language Parsers: Python native ast module, JavaScript Node.js + Esprima AST parser, C/C++ libclang Python bindings
+- Database & Persistence: SQLite (data/reports.db for audit reports, data/sessions.db for chat history)
+- DevOps & CI/CD: Docker, GitHub Actions (Pytest, Flake8 linting), Pytest
+- Frontend UI: HTML5 / JavaScript browser interface served via FastAPI
+
+Core Architecture & Workflow:
+1. Ingestion Layer (POST /upload, POST /analyze): Accepts single code files (.py, .js, .cpp, .c), uploaded archives (.zip, .tar.gz), pasted snippets, or remote code URLs.
+2. Static Analysis Engine (agent/engine.py, agent/parser.py): Parses code into Abstract Syntax Trees (ASTs) for Python, JS, and C/C++. Scans for vulnerabilities including hardcoded API keys/secrets, unsafe dynamic evaluation (eval, exec), insecure deserialization (pickle.load), weak hashes (MD5, SHA1), and dangerous process execution (subprocess).
+3. RAG & AI Reasoning Layer (agent/reasoning.py, agent/llm_client.py): Queries the Security Knowledge Base (agent/knowledge_base.py) seeded with 50+ OWASP Top 10 / CWE rules using vector embeddings (retrieval-embedding-nim). Feeds code snippets, static findings, and relevant OWASP rules to llama-3-1-nemotron-nano-8B-v1 to generate severity scores (Low/Medium/High), root-cause explanations, remediation code diffs, and project-level risk summaries.
+4. Persistence & Presentation Layer (agent/persistence.py, app/app.py): Stores structured JSON audit reports and chat histories in SQLite. Provides an interactive /chat API for developers to ask follow-up questions about vulnerabilities.
+
+Key Features:
+- Multi-Language AST Parsing: Static code analysis for Python, JavaScript (Esprima), and C/C++ (libclang).
+- AI-Powered Vulnerability Remediation: Generates plain-English explanations and drop-in code fixes using NVIDIA NIM LLM models.
+- Security RAG Knowledge Base: Context-aware retrieval of OWASP Top 10 and CWE security guidelines.
+- Interactive Security Assistant (/chat): Stateful chat endpoint enabling developers to ask follow-up questions about detected risks.
+- Multi-Backend Reliability: Flexibly switches between cloud NVIDIA NIM endpoints, AWS SageMaker endpoints, and an offline template-based fallback.
+- Risk Scoring & Analytics: Computes overall project security risk scores and stores historical audit logs.
+
+API Endpoints:
+- GET /: Serves the browser-based code uploader interface
+- GET /health: Health check endpoint returning server status
+- POST /upload: Multipart upload for .py, .js, .c, .zip, .tar files or URLs
+- POST /analyze: Triggers static scan + RAG LLM enrichment on code input
+- POST /analyze_json: Processes raw static analysis JSON payloads for LLM reasoning
+- POST /chat: Interactive Q&A chat endpoint regarding code findings
+- GET /summary: Retrieves project-wide vulnerability risk scores and statistics
+- GET /history: Fetches saved historical audit reports from SQLite persistence
+
 ## Publication — IEEE Research Paper
 
 Vikrant published a research paper at the IEEE International Conference on Emerging Smart Computing and Informatics (ESCI) in 2025. The paper is titled Dynamic StarCraft: Multi-Agent Generative AI for Immersive Experiences. This is a peer-reviewed international publication accepted at an IEEE conference. It explores multi-agent generative AI systems applied to game environments.
