@@ -269,7 +269,6 @@ function ProjectPreview({ project }: { project: Project }) {
               alt={activeSnapshot.alt ?? `${project.title} snapshot ${activeSnapshotIndex + 1}`}
               width={1280}
               height={720}
-              unoptimized
               className="aspect-video h-full max-h-[190px] w-full cursor-pointer object-cover transition duration-200 group-hover:brightness-75"
               onClick={() => setLightboxIndex(activeSnapshotIndex)}
             />

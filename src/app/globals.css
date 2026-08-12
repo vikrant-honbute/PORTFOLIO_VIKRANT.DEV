@@ -59,7 +59,6 @@ body {
 .surface-card {
   background: var(--card-surface);
   border: 0.5px solid var(--line-border);
-  backdrop-filter: blur(8px);
 }
 
 .orange-glow-hover {
