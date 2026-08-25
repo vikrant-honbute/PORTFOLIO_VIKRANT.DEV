@@ -1,8 +1,14 @@
 """RAG query logic — retrieves context from Pinecone and generates answers."""
 
 import os
+import re
 import importlib
 from dataclasses import dataclass
+
+
+def _strip_think_tags(text: str) -> str:
+    """Strip Qwen-style <think>…</think> reasoning blocks from model output."""
+    return re.sub(r"<think>[\s\S]*?</think>", "", text, flags=re.IGNORECASE).strip()
 
 import google.generativeai as genai
 
@@ -59,13 +65,13 @@ def query_namespace(namespace: str, question: str, top_k: int) -> tuple[str, lis
             model="qwen/qwen3.6-27b",
             messages=[{"role": "user", "content": prompt}],
         )
-        answer = (response.choices[0].message.content or "").strip()
+        answer = _strip_think_tags((response.choices[0].message.content or "").strip())
 
         if not answer:
             raise ValueError("Groq returned empty response")
     except Exception:
         response = _model.generate_content(prompt)
-        answer = response.text.strip()
+        answer = _strip_think_tags(response.text.strip())
 
     sources = [
         RetrievedChunk(

@@ -3,6 +3,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { queryPortfolioContext } from "@/lib/api";
 import { projects } from "@/data/projects";
 
+/** Strip Qwen-style <think>…</think> reasoning blocks from model output. */
+function stripThinkTags(text: string): string {
+  return text.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
+}
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 const VIKRANT_CONTEXT = `
@@ -60,7 +65,7 @@ async function getLocalFallbackAnswer(question: string, context?: string, projec
       throw new Error("Groq fallback returned empty response");
     }
 
-    return answer;
+    return stripThinkTags(answer);
   } catch {
     const result = await Promise.race([
       model.generateContent(prompt),
@@ -69,7 +74,7 @@ async function getLocalFallbackAnswer(question: string, context?: string, projec
       }),
     ]);
 
-    return result.response.text().trim();
+    return stripThinkTags(result.response.text().trim());
   }
 }
 
@@ -91,7 +96,7 @@ export async function POST(req: NextRequest) {
 
       if (!shouldFallback(backendResult.answer)) {
         return NextResponse.json({
-          answer: backendResult.answer,
+          answer: stripThinkTags(backendResult.answer),
           sources: backendResult.sources,
           namespace: backendResult.namespace,
           mode: "pinecone",

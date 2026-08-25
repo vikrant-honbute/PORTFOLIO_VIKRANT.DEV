@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+/** Strip Qwen-style <think>…</think> reasoning blocks from model output. */
+function stripThinkTags(text: string): string {
+  return text.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
+}
+
 const SYSTEM_PROMPT = `You are an AI assistant helping a user write a professional outreach message to Vikrant.
 Your task is to rewrite the user's rough input into a polished, formal message directed TO Vikrant, written FROM the perspective of the user (first-person "I" or "We").
 CRITICAL RULES:
@@ -37,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     const groqData = await groqResponse.json();
-    const message = groqData?.choices?.[0]?.message?.content?.trim();
+    const message = stripThinkTags(groqData?.choices?.[0]?.message?.content?.trim() ?? "");
 
     if (!message) {
       throw new Error("Groq returned empty response");

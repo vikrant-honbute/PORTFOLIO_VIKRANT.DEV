@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import { profile } from "@/data/profile";
 
 type Message = { role: "user" | "ai"; text: string };
@@ -78,6 +79,28 @@ export default function AIChatWidget() {
         }
         .chat-scroll::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 106, 0, 0.4);
+        }
+
+        /* Markdown styling inside AI chat bubbles */
+        .ai-markdown p { margin: 0 0 0.5em 0; }
+        .ai-markdown p:last-child { margin-bottom: 0; }
+        .ai-markdown strong { color: #ff8a2c; font-weight: 600; }
+        .ai-markdown ul, .ai-markdown ol {
+          margin: 0.35em 0;
+          padding-left: 1.25em;
+        }
+        .ai-markdown li { margin-bottom: 0.2em; }
+        .ai-markdown li::marker { color: rgba(255, 106, 0, 0.6); }
+        .ai-markdown code {
+          background: rgba(255, 255, 255, 0.08);
+          padding: 0.1em 0.35em;
+          border-radius: 4px;
+          font-size: 0.9em;
+        }
+        .ai-markdown a {
+          color: #ff8a2c;
+          text-decoration: underline;
+          text-underline-offset: 2px;
         }
       `}</style>
       {/* ── Floating button ───────────────────────────────────── */}
@@ -191,13 +214,15 @@ export default function AIChatWidget() {
           <div className="chat-scroll flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-4">
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                <p className={`max-w-[85%] px-4 py-2.5 text-[13px] leading-relaxed shadow-sm ${
-                  m.role === "user"
-                    ? "rounded-2xl rounded-tr-sm bg-gradient-to-br from-[#ff6a00] to-[#ff8a2c] text-black font-semibold shadow-[0_4px_14px_rgba(255,106,0,0.25)]"
-                    : "rounded-2xl rounded-tl-sm border border-white/10 bg-white/[0.06] text-[var(--foreground)] backdrop-blur-md"
-                }`}>
-                  {m.text}
-                </p>
+                {m.role === "user" ? (
+                  <p className="max-w-[85%] px-4 py-2.5 text-[13px] leading-relaxed shadow-sm rounded-2xl rounded-tr-sm bg-gradient-to-br from-[#ff6a00] to-[#ff8a2c] text-black font-semibold shadow-[0_4px_14px_rgba(255,106,0,0.25)]">
+                    {m.text}
+                  </p>
+                ) : (
+                  <div className="ai-markdown max-w-[85%] px-4 py-2.5 text-[13px] leading-relaxed shadow-sm rounded-2xl rounded-tl-sm border border-white/10 bg-white/[0.06] text-[var(--foreground)] backdrop-blur-md">
+                    <ReactMarkdown>{m.text}</ReactMarkdown>
+                  </div>
+                )}
               </div>
             ))}
             {loading && (
