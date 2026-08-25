@@ -27,7 +27,7 @@ function shouldFallback(answer: string) {
 }
 
 async function getLocalFallbackAnswer(question: string, context?: string, projectTitle?: string) {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
 
   const systemContext = projectTitle
     ? `${VIKRANT_CONTEXT}\n\nThe user is asking specifically about the project: "${projectTitle}".\nExtra project context: ${context ?? ""}\nFocus your answer on this project unless asked otherwise.`
@@ -43,7 +43,7 @@ async function getLocalFallbackAnswer(question: string, context?: string, projec
         Authorization: `Bearer ${process.env.GROQ_API_KEY!}`,
       },
       body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
+        model: "qwen/qwen3.6-27b",
         messages: [{ role: "user", content: prompt }],
       }),
     });

@@ -19,7 +19,7 @@ if _groq_api_key:
         _groq_client = importlib.import_module("groq").Groq(api_key=_groq_api_key)
     except Exception:
         _groq_client = None
-_model = genai.GenerativeModel("gemini-2.0-flash")
+_model = genai.GenerativeModel("gemini-3.6-flash")
 
 SYSTEM_PROMPT = """You are Vikrant Honbute's portfolio assistant.
 Answer questions about his projects, skills, and experience using only the context provided.
@@ -56,7 +56,7 @@ def query_namespace(namespace: str, question: str, top_k: int) -> tuple[str, lis
             raise ValueError("Missing GROQ_API_KEY")
 
         response = _groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="qwen/qwen3.6-27b",
             messages=[{"role": "user", "content": prompt}],
         )
         answer = (response.choices[0].message.content or "").strip()
