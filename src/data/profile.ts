@@ -11,9 +11,9 @@ export const profile = {
   headingPrimary: "I build",
   headingAccent: "AI & Data Solutions that actually works....",
   resumePreviewUrl:
-    "https://drive.google.com/file/d/1PwNDfDqg3x2SPq5YxKDY51_rwaXGoEJv/preview",
+    "https://drive.google.com/file/d/1cER0i_7lXYOqXjmTfVbgPEDQJgOOdKxK/preview",
   resumeDownloadUrl:
-    "https://drive.google.com/uc?export=download&id=1PwNDfDqg3x2SPq5YxKDY51_rwaXGoEJv",
+    "https://drive.google.com/uc?export=download&id=1cER0i_7lXYOqXjmTfVbgPEDQJgOOdKxK",
   shortBio:
     "Entry-level Data & AI Engineer actively looking for full-time roles in the Pune tech ecosystem.",
   longBio:
