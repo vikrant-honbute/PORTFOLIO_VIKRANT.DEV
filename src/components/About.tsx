@@ -179,9 +179,23 @@ export default function About() {
               </span>{" "}
               <span className="inline-block origin-bottom-right hover:animate-pulse">👋</span>
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-neutral-400 md:text-lg">
-              I’m a 2026 AI & Data Science graduate from Vishwakarma Institute of Information Technology, Pune, focused on building AI-powered applications, scalable backend systems, and modern web products. My work spans Machine Learning, Generative AI, Data Engineering, FastAPI, Django, React, and Next.js, with an emphasis on solving real-world problems through practical software engineering.
-            </p>
+            <div className="mt-5 space-y-4 text-base leading-relaxed text-neutral-400 md:text-lg">
+              <p>
+                I&apos;m a 2026 AI &amp; Data Science graduate from Vishwakarma Institute of Information Technology, Pune, currently working as a <strong className="text-neutral-200">Gen AI Intern at Bajaj Tech.AI</strong>.
+              </p>
+              <p>
+                I&apos;m focused on <strong className="text-neutral-200">Generative AI and AI Engineering</strong>, with hands-on experience building AI-powered applications using <strong className="text-neutral-200">LLMs, RAG, AI agents, LangChain, LangGraph, Python, and cloud platforms like Azure and AWS</strong>.
+              </p>
+              <p>
+                My interests extend across <strong className="text-neutral-200">Machine Learning, Data Engineering, backend development, and scalable AI systems</strong>. I enjoy working at the intersection of AI and software engineering — turning ideas into practical, production-oriented applications rather than just prototypes.
+              </p>
+              <p>
+                One of the projects I&apos;ve worked on is an <strong className="text-neutral-200">AI-powered recruitment voice agent SaaS platform</strong>, combining conversational AI, automation, and modern backend technologies to solve a real-world hiring problem.
+              </p>
+              <p>
+                Currently, I&apos;m deepening my expertise in <strong className="text-neutral-200">AI agents, retrieval systems, LLM applications, and cloud-based AI solutions</strong>, while continuously exploring new ways to build reliable and useful AI products.
+              </p>
+            </div>
           </Section>
         </div>
 
