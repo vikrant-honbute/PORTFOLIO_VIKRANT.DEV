@@ -1,104 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import {
-  Brain,
-  Cpu,
-  Download,
-  Eye,
-  GitBranch,
-  Layout,
-  Link,
-  Mail,
-  Network,
-  Rocket,
-  Server,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { profile } from "@/data/profile";
 import ResumePreviewModal from "@/components/ResumePreviewModal";
-
-type InfoItem = {
-  icon: LucideIcon;
-  title: string;
-  desc: string;
-};
-
-const WHAT_I_DO: InfoItem[] = [
-  {
-    icon: Brain,
-    title: "ML/DL Engineering",
-    desc: "Develop models with end-to-end pipelines and MLOps practices",
-  },
-  {
-    icon: Sparkles,
-    title: "Generative AI",
-    desc: "Build LLM applications with agentic workflows",
-  },
-  {
-    icon: Server,
-    title: "Backend Systems",
-    desc: "Scalable APIs using FastAPI and Django",
-  },
-  {
-    icon: Layout,
-    title: "Modern Frontends",
-    desc: "Production apps with React.js and Next.js",
-  },
-];
-
-const PROJECTS: InfoItem[] = [
-  {
-    icon: Rocket,
-    title: "Gen AI on Hugging Face",
-    desc: "Deployed LLM demos and Spaces",
-  },
-  {
-    icon: GitBranch,
-    title: "End-to-end ML + MLOps",
-    desc: "Training -> deployment -> monitoring",
-  },
-  {
-    icon: Cpu,
-    title: "Doctor Appointment System",
-    desc: "Agentic AI with LangGraph",
-  },
-  {
-    icon: ShieldCheck,
-    title: "CodeGuardian",
-    desc: "Autonomous DevSecOps agent",
-  },
-  {
-    icon: Network,
-    title: "Advanced RAG Systems",
-    desc: "Agentic, Adaptive, Corrective RAG",
-  },
-];
-
-const FOCUS = [
-  "Advanced RAG & Agents",
-  "SaaS product development",
-  "Placement prep (DSA + System Design)",
-];
-
-const TECH = [
-  "Python",
-  "JavaScript",
-  "ML",
-  "DL",
-  "GenAI",
-  "FastAPI",
-  "Django",
-  "React",
-  "Next.js",
-  "Docker",
-  "Git",
-  "Hugging Face",
-];
 
 type RevealProps = {
   children: ReactNode;
@@ -152,65 +59,6 @@ function Section({ label, delay = 0, children }: SectionProps) {
         {children}
       </section>
     </Reveal>
-  );
-}
-
-type InfoCardProps = {
-  icon: LucideIcon;
-  title: string;
-  desc: string;
-};
-
-function InfoCard({ icon: Icon, title, desc }: InfoCardProps) {
-  return (
-    <article className="group flex gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-orange-500/30 hover:bg-white/[0.04]">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-black/50 text-neutral-400 transition-colors group-hover:text-orange-400">
-        <Icon className="h-5 w-5" />
-      </div>
-      <div>
-        <h4 className="font-semibold text-neutral-100 transition-colors group-hover:text-white">{title}</h4>
-        <p className="mt-1 text-sm leading-relaxed text-neutral-400">{desc}</p>
-      </div>
-    </article>
-  );
-}
-
-type ProjectCardProps = {
-  icon: LucideIcon;
-  title: string;
-  desc: string;
-  delay: number;
-};
-
-function ProjectCard({ icon: Icon, title, desc, delay }: ProjectCardProps) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-
-  return (
-    <article
-      ref={ref}
-      className="group rounded-xl border border-white/5 bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40 hover:bg-orange-500/5 hover:shadow-[0_8px_24px_-12px_rgba(249,115,22,0.2)]"
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : "translateY(24px)",
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      <Icon className="mb-3 h-6 w-6 text-neutral-500 transition-colors group-hover:text-orange-400" />
-      <h4 className="font-semibold text-neutral-100 transition-colors group-hover:text-white">{title}</h4>
-      <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">{desc}</p>
-    </article>
-  );
-}
-
-type BadgeProps = {
-  children: ReactNode;
-};
-
-function Badge({ children }: BadgeProps) {
-  return (
-    <span className="cursor-default rounded-md border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-neutral-300 transition-all hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400">
-      {children}
-    </span>
   );
 }
 
@@ -334,57 +182,6 @@ export default function About() {
             <p className="mt-5 text-base leading-relaxed text-neutral-400 md:text-lg">
               I’m a 2026 AI & Data Science graduate from Vishwakarma Institute of Information Technology, Pune, focused on building AI-powered applications, scalable backend systems, and modern web products. My work spans Machine Learning, Generative AI, Data Engineering, FastAPI, Django, React, and Next.js, with an emphasis on solving real-world problems through practical software engineering.
             </p>
-          </Section>
-
-          <Section label="What I Do" delay={100}>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {WHAT_I_DO.map((item) => (
-                <InfoCard key={item.title} {...item} />
-              ))}
-            </div>
-          </Section>
-
-          <Section label="Featured Work" delay={200}>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {PROJECTS.map((project, i) => (
-                <ProjectCard key={project.title} {...project} delay={i * 80} />
-              ))}
-            </div>
-          </Section>
-
-          <Section label="Currently" delay={300}>
-            <div className="flex flex-wrap gap-2">
-              {FOCUS.map((focus) => (
-                <span
-                  key={focus}
-                  className="inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm text-neutral-300"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                  {focus}
-                </span>
-              ))}
-            </div>
-          </Section>
-
-          <Section label="Tech Stack" delay={400}>
-            <div className="flex flex-wrap gap-2">
-              {TECH.map((item) => (
-                <Badge key={item}>{item}</Badge>
-              ))}
-            </div>
-          </Section>
-
-          <Section label="Personality" delay={500}>
-            <div className="relative overflow-hidden rounded-xl border border-orange-500/20 bg-orange-500/5 p-6">
-              <div className="pointer-events-none absolute -right-4 -top-4 opacity-10">
-                <Brain className="h-24 w-24 text-orange-500" />
-              </div>
-              <blockquote className="relative z-10 italic leading-relaxed text-neutral-300">
-                &quot;I prefer learning by building real-world systems rather than just
-                theory. I&apos;m focused on becoming an industry-ready developer who
-                can bridge AI with scalable applications.&quot;
-              </blockquote>
-            </div>
           </Section>
         </div>
 
