@@ -15,6 +15,25 @@ export type ExperienceEntry = {
 
 export const experiences: ExperienceEntry[] = [
   {
+    role: "Gen AI Intern",
+    company: "Bajaj Finserv",
+    period: "Aug 2026 - Present",
+    badge: "Internship",
+    projects: [
+      {
+        title: "Enterprise Chatbot & RAG Evaluation",
+        summary:
+          "Developing an enterprise chatbot for four group entities using Microsoft Azure AI Foundry and evaluating RAG performance.",
+        tags: ["Azure AI Foundry", "RAG Evaluation", "LLMs"],
+        contributions: [
+          "Building a centralized chatbot solution tailored for four distinct Bajaj group companies using Microsoft Azure AI Foundry.",
+          "Developing evaluation pipelines to assess and optimize the performance of Retrieval-Augmented Generation (RAG) applications.",
+          "Improving response accuracy and reliability through systematic testing and metric evaluation.",
+        ],
+      },
+    ],
+  },
+  {
     role: "AI Engineer Intern",
     company: "The Data Tech Labs",
     period: "Sept 2025 - Feb 2026",
