@@ -62,7 +62,7 @@ def query_namespace(namespace: str, question: str, top_k: int) -> tuple[str, lis
             raise ValueError("Missing GROQ_API_KEY")
 
         response = _groq_client.chat.completions.create(
-            model="qwen/qwen3.6-27b",
+            model="qwen/qwen3.8-27b",
             messages=[{"role": "user", "content": prompt}],
         )
         answer = _strip_think_tags((response.choices[0].message.content or "").strip())

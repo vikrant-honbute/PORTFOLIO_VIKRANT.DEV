@@ -25,33 +25,104 @@ export default function AIChatWidget() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [streaming, setStreaming] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const streamingRef = useRef(false);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+  }, [messages, loading, streaming]);
 
   async function send(text?: string) {
     const question = (text ?? input).trim();
-    if (!question || loading) return;
+    if (!question || loading || streamingRef.current) return;
     setInput("");
     setMessages((m) => [...m, { role: "user", text: question }]);
     setLoading(true);
+    setStreaming(false);
+    streamingRef.current = false;
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
       });
-      const data = await res.json();
-      setMessages((m) => [...m, { role: "ai", text: data.answer }]);
+
+      if (!res.ok || !res.body) {
+        throw new Error("Stream request failed");
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let firstToken = true;
+
+      // Add placeholder AI message
+      setMessages((m) => [...m, { role: "ai", text: "" }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+
+        // Process complete SSE lines
+        const lines = buffer.split("\n\n");
+        buffer = lines.pop() ?? "";
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith("data: ")) continue;
+
+          const payload = trimmed.slice(6);
+          if (payload === "[DONE]") break;
+
+          try {
+            const parsed = JSON.parse(payload);
+            if (parsed.token) {
+              if (firstToken) {
+                firstToken = false;
+                setLoading(false);
+                setStreaming(true);
+                streamingRef.current = true;
+              }
+              // Append token to the last AI message
+              setMessages((prev) => {
+                const updated = [...prev];
+                const last = updated[updated.length - 1];
+                if (last && last.role === "ai") {
+                  updated[updated.length - 1] = {
+                    ...last,
+                    text: last.text + parsed.token,
+                  };
+                }
+                return updated;
+              });
+            }
+          } catch {
+            // skip malformed JSON
+          }
+        }
+      }
     } catch {
-      setMessages((m) => [
-        ...m,
-        { role: "ai", text: "Something went wrong. Please try again." },
-      ]);
+      setMessages((m) => {
+        // If we already added a placeholder, replace it
+        const last = m[m.length - 1];
+        if (last && last.role === "ai" && !last.text) {
+          const updated = [...m];
+          updated[updated.length - 1] = {
+            ...last,
+            text: "Something went wrong. Please try again.",
+          };
+          return updated;
+        }
+        return [...m, { role: "ai", text: "Something went wrong. Please try again." }];
+      });
     } finally {
       setLoading(false);
+      setStreaming(false);
+      streamingRef.current = false;
     }
   }
 
@@ -212,7 +283,7 @@ export default function AIChatWidget() {
 
           {/* Messages */}
           <div className="chat-scroll flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-4">
-            {messages.map((m, i) => (
+            {messages.filter((m) => !(m.role === "ai" && m.text === "")).map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 {m.role === "user" ? (
                   <p className="max-w-[85%] px-4 py-2.5 text-[13px] leading-relaxed shadow-sm rounded-2xl rounded-tr-sm bg-gradient-to-br from-[#ff6a00] to-[#ff8a2c] text-black font-semibold shadow-[0_4px_14px_rgba(255,106,0,0.25)]">
@@ -263,7 +334,7 @@ export default function AIChatWidget() {
             />
             <button
               onClick={() => send()}
-              disabled={loading || !input.trim()}
+              disabled={loading || streaming || !input.trim()}
               className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full bg-[var(--primary-accent)] text-black shadow-lg shadow-[rgba(255,106,0,0.3)] transition-all hover:scale-105 hover:brightness-110 disabled:scale-100 disabled:opacity-40"
             >
               <svg className="-ml-0.5 mt-0.5 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

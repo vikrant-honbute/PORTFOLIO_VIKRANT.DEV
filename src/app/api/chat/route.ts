@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { queryPortfolioContext } from "@/lib/api";
-import { projects } from "@/data/projects";
 
 /** Strip Qwen-style <think>…</think> reasoning blocks from model output. */
 function stripThinkTags(text: string): string {
@@ -14,11 +13,7 @@ const VIKRANT_CONTEXT = `
 PHONE BRAND is IQOO NEO 7
 `;
 
-function resolveNamespace(projectTitle?: string) {
-  // Use the canonical portfolio namespace for all frontend chat queries.
-  // Per-project namespaces are not populated by the backend ingestion by default,
-  // which causes unnecessary fallbacks. Querying the single ingested namespace
-  // ensures the project panels use the Pinecone RAG index.
+function resolveNamespace(_projectTitle?: string) {
   return "portfolio-main";
 }
 
@@ -31,9 +26,96 @@ function shouldFallback(answer: string) {
   );
 }
 
-async function getLocalFallbackAnswer(question: string, context?: string, projectTitle?: string) {
-  const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+// ---------------------------------------------------------------------------
+// SSE helpers
+// ---------------------------------------------------------------------------
 
+/** Encode a single SSE data line. */
+function sseEncode(data: string): Uint8Array {
+  return new TextEncoder().encode(`data: ${data}\n\n`);
+}
+
+/** Create SSE Response headers. */
+function sseHeaders(): HeadersInit {
+  return {
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache, no-transform",
+    Connection: "keep-alive",
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Streaming strategies
+// ---------------------------------------------------------------------------
+
+/**
+ * Simulate streaming for a pre-computed answer by splitting it into
+ * word-level chunks with a tiny delay between each.
+ */
+function streamPrecomputedAnswer(
+  answer: string,
+  controller: ReadableStreamDefaultController
+) {
+  const words = answer.split(/(\s+)/); // keep whitespace as separate tokens
+  let index = 0;
+
+  const interval = setInterval(() => {
+    if (index >= words.length) {
+      clearInterval(interval);
+      controller.enqueue(sseEncode("[DONE]"));
+      controller.close();
+      return;
+    }
+    controller.enqueue(sseEncode(JSON.stringify({ token: words[index] })));
+    index++;
+  }, 18); // ~18ms per word ≈ fast but visually pleasing
+}
+
+/**
+ * Real streaming using Gemini's generateContentStream API.
+ */
+async function streamGeminiResponse(
+  prompt: string,
+  controller: ReadableStreamDefaultController
+) {
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+  try {
+    const result = await model.generateContentStream(prompt);
+
+    for await (const chunk of result.stream) {
+      const text = chunk.text();
+      if (text) {
+        controller.enqueue(sseEncode(JSON.stringify({ token: text })));
+      }
+    }
+
+    controller.enqueue(sseEncode("[DONE]"));
+    controller.close();
+  } catch (err) {
+    console.error("Gemini stream error:", err);
+    controller.enqueue(
+      sseEncode(
+        JSON.stringify({
+          token: "Sorry, something went wrong. Please try again.",
+        })
+      )
+    );
+    controller.enqueue(sseEncode("[DONE]"));
+    controller.close();
+  }
+}
+
+/**
+ * Attempt Groq first (non-streaming, then simulate-stream the result).
+ * If Groq fails, fall back to real Gemini streaming.
+ */
+async function streamFallbackResponse(
+  question: string,
+  context: string | undefined,
+  projectTitle: string | undefined,
+  controller: ReadableStreamDefaultController
+) {
   const systemContext = projectTitle
     ? `${VIKRANT_CONTEXT}\n\nThe user is asking specifically about the project: "${projectTitle}".\nExtra project context: ${context ?? ""}\nFocus your answer on this project unless asked otherwise.`
     : VIKRANT_CONTEXT;
@@ -41,51 +123,62 @@ async function getLocalFallbackAnswer(question: string, context?: string, projec
   const prompt = `${systemContext}\n\nQuestion: ${question}`;
 
   try {
-    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GROQ_API_KEY!}`,
-      },
-      body: JSON.stringify({
-        model: "qwen/qwen3.6-27b",
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
+    const groqResponse = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GROQ_API_KEY!}`,
+        },
+        body: JSON.stringify({
+          model: "qwen/qwen3.8-27b",
+          messages: [{ role: "user", content: prompt }],
+        }),
+      }
+    );
 
     if (!groqResponse.ok) {
-      const groqError = await groqResponse.text();
-      throw new Error(groqError || `Groq fallback failed with status ${groqResponse.status}`);
+      throw new Error(`Groq failed: ${groqResponse.status}`);
     }
 
     const groqData = await groqResponse.json();
     const answer = groqData?.choices?.[0]?.message?.content?.trim();
 
     if (!answer) {
-      throw new Error("Groq fallback returned empty response");
+      throw new Error("Groq returned empty response");
     }
 
-    return stripThinkTags(answer);
+    streamPrecomputedAnswer(stripThinkTags(answer), controller);
   } catch {
-    const result = await Promise.race([
-      model.generateContent(prompt),
-      new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error("Gemini timeout")), 15000);
-      }),
-    ]);
-
-    return stripThinkTags(result.response.text().trim());
+    // Groq failed → use real Gemini streaming
+    await streamGeminiResponse(prompt, controller);
   }
 }
+
+// ---------------------------------------------------------------------------
+// Route handler
+// ---------------------------------------------------------------------------
 
 export async function POST(req: NextRequest) {
   try {
     const { question, context, projectTitle } = await req.json();
 
     if (!question?.trim()) {
-      return NextResponse.json({ answer: "Please ask a question." });
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(
+            sseEncode(JSON.stringify({ token: "Please ask a question." }))
+          );
+          controller.enqueue(sseEncode("[DONE]"));
+          controller.close();
+        },
+      });
+      return new Response(stream, { headers: sseHeaders() });
     }
 
+    // --- Try Pinecone RAG backend first ---
+    let pineconeAnswer: string | null = null;
     try {
       const namespace = resolveNamespace(projectTitle);
       const backendResult = await queryPortfolioContext({
@@ -95,24 +188,65 @@ export async function POST(req: NextRequest) {
       });
 
       if (!shouldFallback(backendResult.answer)) {
-        return NextResponse.json({
-          answer: stripThinkTags(backendResult.answer),
-          sources: backendResult.sources,
-          namespace: backendResult.namespace,
-          mode: "pinecone",
-        });
+        pineconeAnswer = stripThinkTags(backendResult.answer);
       }
     } catch (backendError) {
-      console.warn("Pinecone backend failed, using local fallback:", backendError);
+      console.warn(
+        "Pinecone backend failed, using local fallback:",
+        backendError
+      );
     }
 
-    const fallbackAnswer = await getLocalFallbackAnswer(question, context, projectTitle);
-    return NextResponse.json({ answer: fallbackAnswer, mode: "local-fallback" });
+    // --- Build the SSE stream ---
+    const stream = new ReadableStream({
+      start(controller) {
+        if (pineconeAnswer) {
+          // Good Pinecone answer → simulate streaming
+          streamPrecomputedAnswer(pineconeAnswer, controller);
+        } else {
+          // Fallback → Groq or real Gemini stream
+          streamFallbackResponse(
+            question,
+            context,
+            projectTitle,
+            controller
+          ).catch((err) => {
+            console.error("Fallback stream error:", err);
+            controller.enqueue(
+              sseEncode(
+                JSON.stringify({
+                  token: "Sorry, something went wrong. Please try again.",
+                })
+              )
+            );
+            controller.enqueue(sseEncode("[DONE]"));
+            controller.close();
+          });
+        }
+      },
+    });
+
+    return new Response(stream, { headers: sseHeaders() });
   } catch (err) {
     console.error("Chat route error:", err);
-    return NextResponse.json(
-      { answer: "Sorry, something went wrong. Please try again." },
-      { status: 500 }
-    );
+
+    const errorStream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(
+          sseEncode(
+            JSON.stringify({
+              token: "Sorry, something went wrong. Please try again.",
+            })
+          )
+        );
+        controller.enqueue(sseEncode("[DONE]"));
+        controller.close();
+      },
+    });
+
+    return new Response(errorStream, {
+      status: 500,
+      headers: sseHeaders(),
+    });
   }
 }
